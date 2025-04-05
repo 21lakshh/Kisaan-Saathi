@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Kisaan Saathi 🌾</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23395a7f'/%3E%3Cpath d='M30 40c0 0 5-10 20-10s20 10 20 10M30 60c0 0 5 10 20 10s20-10 20-10M50 40v20' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Donation Functions
+        function setDonationAmount(amount) {
+            document.getElementById('donationAmount').value = amount;
+            document.getElementById('paymentAmount').textContent = amount;
+            
+            // Update UI to show selected amount
+            const amountButtons = document.querySelectorAll('.amount-btn');
+            amountButtons.forEach(button => {
+                button.classList.remove('bg-[#4caf50]');
+                button.classList.add('bg-[#1a2e1d]');
+            });
+            
+            // Highlight the selected button
+            if (event && event.target) {
+                const clickedButton = event.target.closest('button');
+                if (clickedButton) {
+                    clickedButton.classList.remove('bg-[#1a2e1d]');
+                    clickedButton.classList.add('bg-[#4caf50]');
+                }
+            }
+        }
+
+        function setDonationType(type) {
+            const oneTimeBtn = document.getElementById('one-time-btn');
+            const monthlyBtn = document.getElementById('monthly-btn');
+            
+            if (type === 'one-time') {
+                oneTimeBtn.classList.add('bg-[#4caf50]');
+                oneTimeBtn.classList.remove('bg-[#1a2e1d]');
+                monthlyBtn.classList.add('bg-[#1a2e1d]');
+                monthlyBtn.classList.remove('bg-[#4caf50]');
+            } else {
+                monthlyBtn.classList.add('bg-[#4caf50]');
+                monthlyBtn.classList.remove('bg-[#1a2e1d]');
+                oneTimeBtn.classList.add('bg-[#1a2e1d]');
+                oneTimeBtn.classList.remove('bg-[#4caf50]');
+            }
+        }
+
+        function showUPIPayment() {
+            const amount = document.getElementById('donationAmount').value || 1000;
+            document.getElementById('paymentAmount').textContent = amount;
+            
+            // Generate QR code
+            const qrCodeElement = document.getElementById('dynamicQRCode');
+            if (qrCodeElement) {
+                qrCodeElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=kisaansaathi@axis&pn=KisaanSaathi&am=${amount}&cu=INR`;
+            }
+            
+            // Show the modal
+            if (typeof bootstrap !== 'undefined') {
+                const qrModal = new bootstrap.Modal(document.getElementById('qrModal'));
+                qrModal.show();
+            } else if (typeof $ !== 'undefined') {
+                $('#qrModal').modal('show');
+            } else {
+                alert('Payment system is currently unavailable. Please try again later.');
+            }
+        }
+
+        function showCardPayment() {
+            const amount = document.getElementById('donationAmount').value || 0;
+            if (!amount) {
+                alert('Please select or enter a donation amount first.');
+                return;
+            }
+            alert(`You'll be redirected to our secure payment gateway to complete your ₹${amount} donation using your card.`);
+        }
+
+        function showPaytmPayment() {
+            const amount = document.getElementById('donationAmount').value || 0;
+            if (!amount) {
+                alert('Please select or enter a donation amount first.');
+                return;
+            }
+            alert(`Thank you for your generosity! You'll be redirected to Paytm to complete your ₹${amount} donation.`);
+        }
+        
+        // Initialize on document load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default donation amount and highlight first button
+            const firstButton = document.querySelector('.amount-btn');
+            if (firstButton) {
+                firstButton.classList.remove('bg-[#1a2e1d]');
+                firstButton.classList.add('bg-[#4caf50]');
+                
+                const amount = firstButton.getAttribute('data-amount') || 1000;
+                document.getElementById('donationAmount').value = amount;
+            }
+        });
+    </script>
+</head>
+<body class="bg-[#1e3a23]">
+
+    <div class="container mx-auto py-12 px-4">
+        <h1 class="text-4xl font-bold text-center text-white mb-12">Support a Farmer Today 🌾</h1>
+        
+        <!-- Main Donation Section -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Left Side: Impact Information -->
+            <div class="bg-[#162619] rounded-xl p-8 border border-[#2d3d2f]/40">
+                <h3 class="text-2xl font-bold text-center text-white mb-8">
+                    Your Impact on Farmers' Lives 🌾
+                </h3>
+
+                <!-- Impact Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-8">
+                    <div class="text-center p-4 bg-[#1a2e1d] rounded-lg">
+                        <h4 class="text-[#4caf50] text-3xl font-bold">1000+</h4>
+                        <p class="text-gray-300 text-sm mt-1">Farmers Helped</p>
+                    </div>
+                    <div class="text-center p-4 bg-[#1a2e1d] rounded-lg">
+                        <h4 class="text-[#4caf50] text-3xl font-bold">₹2M+</h4>
+                        <p class="text-gray-300 text-sm mt-1">Aid Distributed</p>
+                    </div>
+                    <div class="text-center p-4 bg-[#1a2e1d] rounded-lg">
+                        <h4 class="text-[#4caf50] text-3xl font-bold">50+</h4>
+                        <p class="text-gray-300 text-sm mt-1">Villages Reached</p>
+                    </div>
+                </div>
+
+                <!-- Donation Impact Cards -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 bg-[#1a2e1d] p-4 rounded-lg transition-all hover:bg-[#223423]">
+                        <div class="bg-[#4caf50]/20 p-3 rounded-full">
+                            <i class="fas fa-seedling text-[#4caf50] text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold">₹1,000</h4>
+                            <p class="text-gray-400 text-sm">Provides seeds for one acre</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-[#1a2e1d] p-4 rounded-lg transition-all hover:bg-[#223423]">
+                        <div class="bg-[#4caf50]/20 p-3 rounded-full">
+                            <i class="fas fa-tractor text-[#4caf50] text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold">₹5,000</h4>
+                            <p class="text-gray-400 text-sm">Supports equipment maintenance</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-[#1a2e1d] p-4 rounded-lg transition-all hover:bg-[#223423]">
+                        <div class="bg-[#4caf50]/20 p-3 rounded-full">
+                            <i class="fas fa-graduation-cap text-[#4caf50] text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold">₹10,000</h4>
+                            <p class="text-gray-400 text-sm">Funds farming education</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Impact Information -->
+                <div class="mt-8 pt-6 border-t border-[#2d3d2f] text-gray-300">
+                    <h4 class="text-[#4caf50] font-semibold mb-2">How Your Donation Helps</h4>
+                    <ul class="space-y-2 text-sm list-disc pl-5">
+                        <li>Provides emergency support during natural disasters</li>
+                        <li>Enables access to modern farming techniques</li>
+                        <li>Supports farmer families with medical assistance</li>
+                        <li>Funds community farming projects in rural areas</li>
+                        <li>Helps develop sustainable agricultural practices</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Side: Donation Form -->
+            <div class="bg-[#162619] rounded-xl p-8 border border-[#2d3d2f]/40">
+                <h3 class="text-2xl font-bold text-center text-white mb-8">
+                    Make a Donation 🙏
+                </h3>
+
+                <!-- Donation Form -->
+                <div class="space-y-6">
+                    <!-- Donor Information -->
+                    <div>
+                        <label class="text-gray-300 text-sm mb-2 block">Your Name (Optional)</label>
+                        <input type="text" placeholder="Enter your name" 
+                               class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
+                    </div>
+                    
+                    <div>
+                        <label class="text-gray-300 text-sm mb-2 block">Email (For Receipt)</label>
+                        <input type="email" placeholder="Enter your email" 
+                               class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
+                    </div>
+                    
+                    <!-- Amount Selection -->
+                    <div>
+                        <label class="text-gray-300 text-sm mb-2 block">Select Amount</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button onclick="setDonationAmount(1000)" data-amount="1000"
+                                class="amount-btn bg-[#1a2e1d] hover:bg-[#223423] text-white py-3 px-4 rounded-lg transition-all focus:ring-2 focus:ring-[#4caf50]">
+                                ₹1,000
+                            </button>
+                            <button onclick="setDonationAmount(5000)" data-amount="5000"
+                                class="amount-btn bg-[#1a2e1d] hover:bg-[#223423] text-white py-3 px-4 rounded-lg transition-all focus:ring-2 focus:ring-[#4caf50]">
+                                ₹5,000
+                            </button>
+                            <button onclick="setDonationAmount(10000)" data-amount="10000"
+                                class="amount-btn bg-[#1a2e1d] hover:bg-[#223423] text-white py-3 px-4 rounded-lg transition-all focus:ring-2 focus:ring-[#4caf50]">
+                                ₹10,000
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Amount -->
+                    <div>
+                        <label class="text-gray-300 text-sm mb-2 block">Or Enter Custom Amount</label>
+                        <div class="flex">
+                            <span class="bg-[#1a2e1d] px-4 py-3 rounded-l-lg text-gray-400 border-r border-[#2d3d2f]">₹</span>
+                            <input type="number" id="donationAmount" placeholder="Enter amount" min="100"
+                                class="flex-1 bg-[#1a2e1d] px-4 py-3 rounded-r-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
+                        </div>
+                    </div>
+                    
+                    <!-- Donation Frequency -->
+                    <div>
+                        <label class="text-gray-300 text-sm mb-2 block">Donation Frequency</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button id="one-time-btn" onclick="setDonationType('one-time')" 
+                                class="bg-[#4caf50] hover:bg-[#3d9a3d] text-white py-3 px-4 rounded-lg transition-all focus:ring-2 focus:ring-[#4caf50]">
+                                One-time
+                            </button>
+                            <button id="monthly-btn" onclick="setDonationType('monthly')"
+                                class="bg-[#1a2e1d] hover:bg-[#223423] text-white py-3 px-4 rounded-lg transition-all focus:ring-2 focus:ring-[#4caf50]">
+                                Monthly
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="space-y-3">
+                        <label class="text-gray-300 text-sm mb-2 block">Choose Payment Method</label>
+                        <button onclick="showUPIPayment()"
+                            class="w-full flex items-center justify-between px-6 py-4 bg-[#4caf50] hover:bg-[#3d9a3d] text-white rounded-lg transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-qrcode text-xl"></i>
+                                <span>UPI Payment</span>
+                            </div>
+                            <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+
+                        <button onclick="showCardPayment()"
+                            class="w-full flex items-center justify-between px-6 py-4 bg-[#1a2e1d] hover:bg-[#223423] text-white rounded-lg transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-credit-card text-xl"></i>
+                                <span>Card Payment</span>
+                            </div>
+                            <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+
+                        <button onclick="showPaytmPayment()"
+                            class="w-full flex items-center justify-between px-6 py-4 bg-[#1a2e1d] hover:bg-[#223423] text-white rounded-lg transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-wallet text-xl"></i>
+                                <span>Paytm</span>
+                            </div>
+                            <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+                    </div>
+
+                    <!-- Security Badge -->
+                    <div class="mt-8 pt-6 border-t border-[#2d3d2f]">
+                        <div class="flex items-center justify-center gap-6">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm" class="h-6 opacity-60 hover:opacity-100 transition-opacity">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI" class="h-6 opacity-60 hover:opacity-100 transition-opacity">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="h-6 opacity-60 hover:opacity-100 transition-opacity">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="h-6 opacity-60 hover:opacity-100 transition-opacity">
+                        </div>
+                        <p class="text-center text-gray-400 text-sm mt-4">
+                            <i class="fas fa-lock text-[#4caf50]"></i>
+                            Secure Payment Gateway
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonials Preview -->
+        <div class="mt-16">
+            <h2 class="text-2xl font-bold text-center text-white mb-8">Hear From Those You've Helped</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-[#4caf50]"><i class="fas fa-quote-left text-2xl"></i></div>
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "The support from Kisaan Saathi helped me recover after the floods destroyed my crops. I could restart farming and provide for my family again."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#4caf50]/20 flex items-center justify-center">
+                            <span class="text-[#4caf50] font-bold">RK</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">Ramesh Kumar</p>
+                            <p class="text-gray-400 text-sm">Farmer, Bihar</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-[#4caf50]"><i class="fas fa-quote-left text-2xl"></i></div>
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "The new farming techniques I learned through Kisaan Saathi have doubled my crop yield. My children can now go to school."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#4caf50]/20 flex items-center justify-center">
+                            <span class="text-[#4caf50] font-bold">SP</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">Sunita Patel</p>
+                            <p class="text-gray-400 text-sm">Farmer, Gujarat</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="text-[#4caf50]"><i class="fas fa-quote-left text-2xl"></i></div>
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "The community farming project funded by Kisaan Saathi transformed our entire village. We now have a sustainable income source."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#4caf50]/20 flex items-center justify-center">
+                            <span class="text-[#4caf50] font-bold">MR</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium">Manoj Reddy</p>
+                            <p class="text-gray-400 text-sm">Village Head, Telangana</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="/#testimonials" class="inline-flex items-center gap-2 text-[#4caf50] hover:text-[#3d9a3d] transition-colors">
+                    View all testimonials 
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Payment Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">Scan QR to Pay</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-code">
+                        <img id="dynamicQRCode"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='14' fill='%236b7280'%3EQR Code not available%3C/text%3E%3C/svg%3E"
+                            alt="UPI QR Code">
+                    </div>
+                    <div class="upi-details">
+                        <p class="upi-id" id="upiId">kisaansaathi@axis</p>
+                        <p class="payment-amount">₹<span id="paymentAmount">100</span></p>
+                        <p class="payment-status">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Waiting for payment...
+                        </p>
+                    </div>
+                    <p class="text-muted mt-3">
+                        Open your UPI app and scan the QR code to complete the payment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1a211d] text-gray-300 pt-16 pb-8 relative">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/50 via-purple-400 to-purple-500/50"></div>
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="logo text-[#4caf50] text-3xl font-devanagari mb-4">Kisaan Saathi 🌾</div>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    Supporting farmers across India with sustainable solutions and emergency aid.
+                </p>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-[#4d564f] text-center text-sm">
+                © 2025 Kisaan Saathi. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html> 

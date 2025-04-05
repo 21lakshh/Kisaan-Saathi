@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisaan Saathi 🌾</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23395a7f'/%3E%3Cpath d='M30 40c0 0 5-10 20-10s20 10 20 10M30 60c0 0 5 10 20 10s20-10 20-10M50 40v20' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="static/script.js"></script>
+    <script type="module" src="static/payment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add this line to include Marked.js -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/your-real-kit-code.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <style>
+        .hero-section {
+            background-image: linear-gradient(rgba(18, 41, 22, 0.85), rgba(18, 41, 22, 0.95)), url('/static/images/farmers.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .auth-form {
+            backdrop-filter: blur(8px);
+            background-color: rgba(15, 31, 18, 0.75);
+            border: 1px solid rgba(45, 61, 47, 0.4);
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+        }
+        
+        .auth-input {
+            background-color: rgba(26, 46, 29, 0.7);
+        }
+        
+        .eye-icon {
+            color: #4caf50;
+        }
+        
+        .Kisaan-Saathi-logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .Kisaan-Saathi-logo:after {
+            content: "🌾";
+            font-size: 1.2em;
+        }
+        
+        .login-button {
+            background-color: #4caf50;
+            transition: all 0.3s ease;
+        }
+        
+        .login-button:hover {
+            background-color: #3d9140;
+        }
+        
+        .register-link {
+            color: #4caf50;
+            text-decoration: none;
+        }
+        
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="bg-[#1e3a23]">
+
+    <section class="hero-section min-h-[650px] flex items-center py-12">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center">
+            <!-- Left side - Welcome message -->
+            <div class="md:w-3/5 text-center md:text-left space-y-6 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">Welcome to <span class="text-[#4caf50]">Kisaan Saathi</span></h1>
+                <p class="text-xl text-gray-300">Empowering farmers with technology, knowledge, and community support.</p>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start mt-8">
+                    <div class="bg-[#2a5a31]/50 rounded-lg px-6 py-4 text-white text-center">
+                        <div class="text-[#4caf50] text-3xl font-bold">12,543+</div>
+                        <div class="text-sm">Farmers Supported</div>
+                    </div>
+                    <div class="bg-[#2a5a31]/50 rounded-lg px-6 py-4 text-white text-center">
+                        <div class="text-[#4caf50] text-3xl font-bold">8,921+</div>
+                        <div class="text-sm">Successful Harvests</div>
+                    </div>
+                    <div class="bg-[#2a5a31]/50 rounded-lg px-6 py-4 text-white text-center">
+                        <div class="text-[#4caf50] text-3xl font-bold">74</div>
+                        <div class="text-sm">Villages Covered</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right side - Login form -->
+            <div class="md:w-2/5 max-w-md w-full">
+                <div class="auth-form rounded-xl p-8 shadow-xl">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-white">Sign In to Your Account</h2>
+                        <p class="text-gray-400 mt-1">Access your farmer dashboard</p>
+                    </div>
+                    
+                    <form id="login-form" class="space-y-5">
+                        <div>
+                            <label for="email" class="block text-gray-300 text-sm font-medium mb-2">Email/Phone</label>
+                            <input type="text" id="email" name="email" 
+                                class="auth-input w-full p-3 rounded-lg border border-[#4caf50]/30 text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all"
+                                placeholder="Enter your email or phone number" required>
+                        </div>
+                        
+                        <div>
+                            <label for="password" class="block text-gray-300 text-sm font-medium mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password" name="password"
+                                    class="auth-input w-full p-3 rounded-lg border border-[#4caf50]/30 text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all"
+                                    placeholder="Enter your password" required>
+                                <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#4caf50]">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-end mt-1">
+                                <a href="#" class="text-sm text-[#4caf50] hover:underline">Forgot password?</a>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2">
+                            <button type="submit" id="login-button"
+                                class="w-full bg-[#4caf50] hover:bg-[#3d9140] text-white py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>Sign In</span>
+                            </button>
+                        </div>
+                        
+                        <div class="text-center text-gray-400 text-sm mt-3">
+                            <span>Don't have an account?</span>
+                            <a href="#" class="text-[#4caf50] hover:underline ml-1">Register here</a>
+                        </div>
+                        
+                        <div class="relative flex items-center gap-4 pt-3">
+                            <div class="h-px bg-[#2d3d2f] flex-grow"></div>
+                            <span class="text-sm text-gray-400">Or continue with</span>
+                            <div class="h-px bg-[#2d3d2f] flex-grow"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-3 mt-3">
+                            <button type="button" class="social-button bg-[#1a2e1d]/70 rounded-lg border border-[#4caf50]/20 hover:bg-[#1a2e1d] transition-all">
+                                <i class="fab fa-google text-white"></i>
+                            </button>
+                            <button type="button" class="social-button bg-[#1a2e1d]/70 rounded-lg border border-[#4caf50]/20 hover:bg-[#1a2e1d] transition-all">
+                                <i class="fab fa-facebook-f text-white"></i>
+                            </button>
+                            <button type="button" class="social-button bg-[#1a2e1d]/70 rounded-lg border border-[#4caf50]/20 hover:bg-[#1a2e1d] transition-all">
+                                <i class="fas fa-phone text-white"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Banner -->
+    <section class="w-full bg-[#0f1f12] py-16" id="donate-banner">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="bg-[#162619] rounded-xl p-8 border border-[#2d3d2f]/40 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 md:w-2/3">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Support a Farmer Today 🌾</h2>
+                    <p class="text-gray-300">Your donation can make a real difference in a farmer's life. Help us provide seeds, equipment, and training to farmers across India.</p>
+                    <div class="flex gap-4 flex-wrap">
+                        <div class="bg-[#1a2e1d] px-4 py-2 rounded-full text-white flex items-center gap-2">
+                            <i class="fas fa-seedling text-[#4caf50]"></i>
+                            1000+ Farmers Helped
+                        </div>
+                        <div class="bg-[#1a2e1d] px-4 py-2 rounded-full text-white flex items-center gap-2">
+                            <i class="fas fa-rupee-sign text-[#4caf50]"></i>
+                            ₹2M+ Aid Distributed
+                        </div>
+                        <div class="bg-[#1a2e1d] px-4 py-2 rounded-full text-white flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-[#4caf50]"></i>
+                            50+ Villages Reached
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/3 flex justify-center">
+                    <a href="/donation.html" class="px-8 py-4 bg-gradient-to-r from-[#4caf50] to-[#2e7d32] hover:from-[#2e7d32] hover:to-[#1b5e20] text-white text-lg font-medium rounded-xl transition-all shadow-lg flex items-center gap-3 group">
+                        <i class="fas fa-heart"></i>
+                        <span>Donate Now</span>
+                        <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Testimonials Section -->
+    <div class="mt-16 mb-24" id="testimonials">
+        <!-- Section Header -->
+        <header class="section-header text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#4caf50]">Voices of Hope</h2>
+        </header>
+
+        <!-- Owl Carousel Slider -->
+        <div class="owl-carousel owl-theme testimonials-container">
+            <!-- Testimonial 1 -->
+            <div class="item testimonial-card">
+                <main class="test-card-body bg-[#2a5a31]/50 backdrop-blur-md rounded-xl">
+                    <div class="quote">
+                        <i class="fa fa-quote-left text-[#4caf50]"></i>
+                        <h2 class="text-white">A Life Transformed</h2>
+                    </div>
+                    <p class="text-gray-300">
+                        "I found an injured puppy on the street. One call to Woof, and within 30 minutes,
+                        they were there. Today, that puppy has a loving home. Your donations make such
+                        rescues possible."
+                    </p>
+                    <div class="ratings">
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                    </div>
+                </main>
+                <div class="profile mt-4">
+                    <div class="profile-desc">
+                        <span class="text-[#4caf50] font-bold">Priya Shah</span>
+                        <span class="text-gray-400">Mumbai Resident</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="item testimonial-card">
+                <main class="test-card-body bg-[#2a5a31]/50 backdrop-blur-md rounded-xl">
+                    <div class="quote">
+                        <i class="fa fa-quote-left text-[#4caf50]"></i>
+                        <h2 class="text-white">Emergency Response</h2>
+                    </div>
+                    <p class="text-gray-300">
+                        "During the floods, PawsGuard rescued over 200 stranded animals. They didn't just save
+                        lives; they gave hope when all seemed lost. Every donation counts in emergencies like
+                        these."
+                    </p>
+                    <div class="ratings">
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                    </div>
+                </main>
+                <div class="profile mt-4">
+                    <div class="profile-desc">
+                        <span class="text-[#4caf50] font-bold">Arjun Kumar</span>
+                        <span class="text-gray-400">Rescue Volunteer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="item testimonial-card">
+                <main class="test-card-body bg-[#2a5a31]/50 backdrop-blur-md rounded-xl">
+                    <div class="quote">
+                        <i class="fa fa-quote-left text-[#4caf50]"></i>
+                        <h2 class="text-white">Daily Miracles</h2>
+                    </div>
+                    <p class="text-gray-300">
+                        "Every morning, I see PawsGuard volunteers feeding the strays in my area. These angels
+                        work tirelessly, rain or shine. A small monthly donation helps keep their mission
+                        alive."
+                    </p>
+                    <div class="ratings">
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                    </div>
+                </main>
+                <div class="profile mt-4">
+                    <div class="profile-desc">
+                        <span class="text-[#4caf50] font-bold">Sneha Patel</span>
+                        <span class="text-gray-400">Regular Donor</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="item testimonial-card">
+                <main class="test-card-body bg-[#2a5a31]/50 backdrop-blur-md rounded-xl">
+                    <div class="quote">
+                        <i class="fa fa-quote-left text-[#4caf50]"></i>
+                        <h2 class="text-white">Second Chances</h2>
+                    </div>
+                    <p class="text-gray-300">
+                        "My heart broke seeing a paralyzed dog struggling. PawsGuard provided months of
+                        treatment and physiotherapy. Today, he runs and plays like any other dog. These
+                        miracles happen because of donors like you."
+                    </p>
+                    <div class="ratings">
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                    </div>
+                </main>
+                <div class="profile mt-4">
+                    <div class="profile-desc">
+                        <span class="text-[#4caf50] font-bold">Dr. Rahul Verma</span>
+                        <span class="text-gray-400">Veterinarian</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 5 -->
+            <div class="item testimonial-card">
+                <main class="test-card-body bg-[#2a5a31]/50 backdrop-blur-md rounded-xl">
+                    <div class="quote">
+                        <i class="fa fa-quote-left text-[#4caf50]"></i>
+                        <h2 class="text-white">Community Impact</h2>
+                    </div>
+                    <p class="text-gray-300">
+                        "As a school teacher, I've seen how PawsGuard's work teaches children compassion.
+                        They rescued an injured puppy from our school grounds, and now our students understand
+                        the importance of being kind to animals."
+                    </p>
+                    <div class="ratings">
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                    </div>
+                </main>
+                <div class="profile mt-4">
+                    <div class="profile-desc">
+                        <span class="text-[#4caf50] font-bold">Meera Krishnan</span>
+                        <span class="text-gray-400">School Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 6 -->
+            <div class="item testimonial-card">
+                <main class="test-card-body bg-[#2a5a31]/50 backdrop-blur-md rounded-xl">
+                    <div class="quote">
+                        <i class="fa fa-quote-left text-[#4caf50]"></i>
+                        <h2 class="text-white">Night Heroes</h2>
+                    </div>
+                    <p class="text-gray-300">
+                        "At 2 AM, I found a critically injured dog after an accident. One call to PawsGuard's
+                        emergency helpline, and they were there within minutes. Their 24/7 service saves
+                        countless lives. Please donate to keep this lifeline running."
+                    </p>
+                    <div class="ratings">
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                        <i class="fa-solid fa-heart text-red-400"></i>
+                    </div>
+                </main>
+                <div class="profile mt-4">
+                    <div class="profile-desc">
+                        <span class="text-[#4caf50] font-bold">Kabir Singh</span>
+                        <span class="text-gray-400">Late Night Hero</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script and CSS Links -->
+    <link rel="stylesheet" href="static/testimonials.css">
+    <script src="static/testimonials.js" defer></script>
+
+    </section>
+
+    <!-- Remove any constraining containers and make footer standalone -->
+    <footer class="w-full bg-[#0f1f12] text-gray-300 pt-12 pb-6 relative">
+        <!-- Decorative Top Border -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/70 via-[#81c784] to-[#4caf50]/70"></div>
+
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- About Kisaan Saathi -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-[#4caf50] mb-4">Kisaan Saathi</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Empowering farmers across India with technology, community support, and resources to improve agricultural productivity and quality of life.
+                    </p>
+                    <div class="flex items-center gap-2 mt-4">
+                        <i class="fas fa-map-marker-alt text-[#4caf50]"></i>
+                        <span class="text-sm">123 Rural Tech Park, Bengaluru, India</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-phone text-[#4caf50]"></i>
+                        <span class="text-sm">+91 800-123-4567</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-envelope text-[#4caf50]"></i>
+                        <span class="text-sm">support@kisaansaathi.org</span>
+                    </div>
+                </div>
+
+                <!-- Farmer Resources -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-[#4caf50] mb-4">Farmer Resources</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="hover:text-[#4caf50] transition-colors flex items-center gap-2 text-sm">
+                                <i class="fas fa-leaf"></i> Crop Disease Detection
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-[#4caf50] transition-colors flex items-center gap-2 text-sm">
+                                <i class="fas fa-chart-line"></i> Market Price Analysis
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-[#4caf50] transition-colors flex items-center gap-2 text-sm">
+                                <i class="fas fa-university"></i> Government Schemes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-[#4caf50] transition-colors flex items-center gap-2 text-sm">
+                                <i class="fas fa-recycle"></i> Waste Management
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-[#4caf50] transition-colors flex items-center gap-2 text-sm">
+                                <i class="fas fa-seedling"></i> Sustainable Farming
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard.html" class="hover:text-[#4caf50] transition-colors flex items-center gap-2 text-sm">
+                                <i class="fas fa-tachometer-alt"></i> Farmer Dashboard
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Connect -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-[#4caf50] mb-4">Stay Connected</h3>
+                    <!-- Newsletter -->
+                    <div class="mb-5">
+                        <p class="text-sm mb-3">Subscribe for farming tips and updates</p>
+                        <div class="flex">
+                            <input type="email" placeholder="Enter your email"
+                                class="bg-[#1a2e1d] px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#4caf50] flex-1 text-sm border border-[#4caf50]/30">
+                            <button class="bg-[#4caf50] hover:bg-[#2e7d32] px-4 py-2 rounded-r-lg transition-colors">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Social Links -->
+                    <div class="space-y-3">
+                        <h4 class="font-medium text-white text-sm">Follow Us</h4>
+                        <div class="flex space-x-3">
+                            <a href="#" class="bg-[#1a2e1d] p-2.5 rounded-full hover:bg-[#4caf50] transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-[#1a2e1d] p-2.5 rounded-full hover:bg-[#4caf50] transition-colors">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="bg-[#1a2e1d] p-2.5 rounded-full hover:bg-[#4caf50] transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="bg-[#1a2e1d] p-2.5 rounded-full hover:bg-[#4caf50] transition-colors">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="bg-[#1a2e1d] p-2.5 rounded-full hover:bg-[#4caf50] transition-colors">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="mt-8 pt-6 border-t border-[#2d3d2f]">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="text-sm text-gray-400">
+                        © 2025 Kisaan Saathi. All rights reserved. Made with <i class="fas fa-heart text-[#4caf50]"></i> for farmers
+                    </div>
+                    <div class="flex gap-6 text-xs">
+                        <a href="#privacy" class="hover:text-[#4caf50] transition-colors">Privacy Policy</a>
+                        <a href="#terms" class="hover:text-[#4caf50] transition-colors">Terms of Use</a>
+                        <a href="#faq" class="hover:text-[#4caf50] transition-colors">FAQ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- QR Payment Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">Scan QR to Pay</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-code">
+                        <img id="dynamicQRCode"
+                            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='14' fill='%236b7280'%3EQR Code not available%3C/text%3E%3C/svg%3E"
+                            alt="UPI QR Code">
+                    </div>
+                    <div class="upi-details">
+                        <p class="upi-id" id="upiId">animalrescue@axis</p>
+                        <p class="payment-amount">₹<span id="paymentAmount">100</span></p>
+                        <p class="payment-status">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Waiting for payment...
+                        </p>
+                    </div>
+                    <p class="text-muted mt-3">
+                        Open your UPI app and scan the QR code to complete the payment
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Initialize Bootstrap modals
+        document.addEventListener('DOMContentLoaded', () => {
+            window.bootstrap = require('bootstrap');
+        });
+    </script>
+    
+    <script>
+        // Handle login form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            // Login form functionality
+            const loginForm = document.getElementById('login-form');
+            const loginButton = document.getElementById('login-button');
+            
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    
+                    // Disable button and show loading state
+                    loginButton.disabled = true;
+                    loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Signing in...</span>';
+                    
+                    // Simulate authentication (replace with actual API call)
+                    setTimeout(function() {
+                        // In a real app, you would validate credentials here
+                        // This is just a demo that automatically redirects
+                        
+                        // Store login state (in a real app, you'd use proper auth tokens)
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('user', JSON.stringify({
+                            name: "Demo Farmer",
+                            email: email,
+                            farmName: "Green Valley Farm"
+                        }));
+                        
+                        // Redirect to dashboard
+                        window.location.href = '/dashboard.html';
+                    }, 1500);
+                });
+            }
+            
+            // Password visibility toggle
+            const togglePasswordBtn = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            
+            if (togglePasswordBtn && passwordInput) {
+                togglePasswordBtn.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // Toggle icon
+                    const icon = togglePasswordBtn.querySelector('i');
+                    if (type === 'text') {
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            }
+            
+        });
+    </script>
+</body>
+
+</html>

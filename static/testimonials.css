@@ -1,0 +1,74 @@
+/* testimonials.css */
+.testimonial-card {
+    padding: 20px;
+}
+
+.test-card-body {
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.test-card-body:hover {
+    transform: translateY(-5px);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.owl-nav button {
+    background: #2a5a31 !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    margin: 0 10px;
+}
+
+.owl-nav button i {
+    color: #fff;
+}
+
+.owl-dots .owl-dot span {
+    background: #4d564f !important;
+}
+
+.owl-dots .owl-dot.active span {
+    background: #a855f7 !important; /* Tailwind purple-400 */
+}
+
+.separator-wrapper {
+    margin-top: -48px;
+    margin-bottom: -48px;
+    z-index: 10;
+}
+
+.footer-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.footer-wave svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 70px;
+}
