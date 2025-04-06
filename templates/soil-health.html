@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Health - Kisaan Saathi 🌾</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23395a7f'/%3E%3Cpath d='M30 40c0 0 5-10 20-10s20 10 20 10M30 60c0 0 5 10 20 10s20-10 20-10M50 40v20' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-[#1e3a23]">
+    <header class="header bg-[#1e3a23] p-4 flex justify-between items-center border-b border-[#4caf50]/20">
+        <div class="logo text-[#4caf50] text-4xl font-devanagari">Kisaan Saathi 🌾</div>
+        <nav class="nav-links flex space-x-6 text-lg">
+            <a href="/" class="text-white hover:text-[#4caf50]">Home</a>
+            <a href="/dashboard.html" class="text-white hover:text-[#4caf50]">Dashboard</a>
+            <a href="/soil-health.html" class="text-[#4caf50] hover:text-[#4caf50]">Soil Health</a>
+            <a href="/static/marketplace.html" class="text-white hover:text-[#4caf50]">Marketplace</a>
+        </nav>
+    </header>
+
+    <div class="container mx-auto py-8 px-4">
+        <!-- Page Title -->
+        <div class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Soil Health Analysis</h1>
+            <p class="text-gray-300 text-lg">Get detailed insights into your soil composition and personalized recommendations</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Soil Report Uploader -->
+            <div class="lg:col-span-1">
+                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40 mb-6">
+                    <h2 class="text-xl font-bold text-white mb-4">Upload Soil Report</h2>
+                    <p class="text-gray-300 text-sm mb-4">Upload your soil test results to get a detailed analysis and recommendations.</p>
+                    
+                    <div class="border-2 border-dashed border-[#4caf50]/30 rounded-lg p-8 text-center mb-4 hover:border-[#4caf50]/70 transition-all cursor-pointer">
+                        <div class="bg-[#4caf50]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <i class="fas fa-upload text-[#4caf50] text-2xl"></i>
+                        </div>
+                        <p class="text-white mb-1">Drag & drop files or click to browse</p>
+                        <p class="text-gray-400 text-xs">Support formats: PDF, JPG, PNG</p>
+                        <input type="file" class="hidden" id="soil-report-upload">
+                    </div>
+                    
+                    <button class="w-full bg-[#4caf50] hover:bg-[#3d9140] text-white py-3 rounded-lg font-medium">
+                        Analyze Soil Report
+                    </button>
+                </div>
+                
+                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                    <h2 class="text-xl font-bold text-white mb-4">Soil Test Options</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-start">
+                            <div class="bg-[#4caf50]/10 p-3 rounded-full mr-3">
+                                <i class="fas fa-flask text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold">Mobile Soil Testing</h3>
+                                <p class="text-gray-300 text-sm">Schedule a mobile soil testing van to visit your farm for sample collection.</p>
+                                <button class="mt-2 bg-[#1e3a23] hover:bg-[#264b2b] text-[#4caf50] text-sm px-3 py-1 rounded">
+                                    Schedule Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-start">
+                            <div class="bg-[#4caf50]/10 p-3 rounded-full mr-3">
+                                <i class="fas fa-map-marker-alt text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold">Lab Testing Centers</h3>
+                                <p class="text-gray-300 text-sm">Find nearest soil testing laboratories where you can submit your samples.</p>
+                                <button class="mt-2 bg-[#1e3a23] hover:bg-[#264b2b] text-[#4caf50] text-sm px-3 py-1 rounded">
+                                    Find Centers
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-start">
+                            <div class="bg-[#4caf50]/10 p-3 rounded-full mr-3">
+                                <i class="fas fa-home text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-semibold">DIY Soil Test Kit</h3>
+                                <p class="text-gray-300 text-sm">Order a do-it-yourself soil testing kit and conduct basic analysis at home.</p>
+                                <button class="mt-2 bg-[#1e3a23] hover:bg-[#264b2b] text-[#4caf50] text-sm px-3 py-1 rounded">
+                                    Order Kit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Soil Analysis Report -->
+            <div class="lg:col-span-2 bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">Soil Analysis Report</h2>
+                    <div class="flex items-center">
+                        <select class="bg-[#1a2e1d] text-white text-sm px-3 py-1 rounded-lg focus:outline-none border border-[#4caf50]/30">
+                            <option>Northern Field (Main)</option>
+                            <option>Southern Field</option>
+                            <option>New Acquisition</option>
+                        </select>
+                        <button class="ml-2 bg-[#1a2e1d] p-1 rounded-lg text-[#4caf50]">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-[#1a2e1d] rounded-lg p-4 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h3 class="text-white font-semibold">Overall Soil Health</h3>
+                            <p class="text-gray-400 text-sm">Last tested: 12 May 2023</p>
+                        </div>
+                        <div class="bg-yellow-600/20 text-yellow-500 px-3 py-1 rounded-full text-sm">
+                            Good
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 text-sm mb-4">Your soil is generally healthy but could benefit from additional organic matter and slight pH adjustment for optimal crop growth.</p>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div class="text-center">
+                            <div class="inline-block w-16 h-16 rounded-full border-4 border-[#4caf50] flex items-center justify-center mb-2">
+                                <span class="text-white font-bold">6.4</span>
+                            </div>
+                            <p class="text-gray-300 text-sm">pH Level</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="inline-block w-16 h-16 rounded-full border-4 border-yellow-500 flex items-center justify-center mb-2">
+                                <span class="text-white font-bold">2.8%</span>
+                            </div>
+                            <p class="text-gray-300 text-sm">Organic Matter</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="inline-block w-16 h-16 rounded-full border-4 border-red-500 flex items-center justify-center mb-2">
+                                <span class="text-white font-bold">Low</span>
+                            </div>
+                            <p class="text-gray-300 text-sm">Nitrogen</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nutrient Levels -->
+                <div class="mb-6">
+                    <h3 class="text-white font-semibold mb-4">Nutrient Levels</h3>
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <canvas id="nutrientChart" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Recommendations -->
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Recommendations</h3>
+                    <div class="space-y-3">
+                        <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-start">
+                            <div class="bg-[#4caf50]/10 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-leaf text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium">Add Nitrogen-rich Fertilizer</h4>
+                                <p class="text-gray-300 text-sm">Apply 25-30 kg/acre of nitrogen-rich fertilizer to address the deficiency.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-start">
+                            <div class="bg-[#4caf50]/10 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-seedling text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium">Incorporate Organic Matter</h4>
+                                <p class="text-gray-300 text-sm">Mix compost or well-rotted manure to improve soil structure and nutrient retention.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-start">
+                            <div class="bg-[#4caf50]/10 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-tint text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium">Adjust pH Level</h4>
+                                <p class="text-gray-300 text-sm">Apply 200 kg/acre of agricultural lime to raise pH slightly for optimal nutrient availability.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Soil Health Info Section -->
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <div class="bg-[#4caf50]/10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-book text-[#4caf50] text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Soil Encyclopedia</h3>
+                <p class="text-gray-300 text-sm mb-4">Learn about different soil types, their properties, and suitable crops for each type.</p>
+                <a href="#" class="text-[#4caf50] font-medium flex items-center">
+                    <span>Explore Soil Guide</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <div class="bg-[#4caf50]/10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-video text-[#4caf50] text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Video Guides</h3>
+                <p class="text-gray-300 text-sm mb-4">Watch expert tutorials on soil improvement techniques and sustainable farming practices.</p>
+                <a href="#" class="text-[#4caf50] font-medium flex items-center">
+                    <span>Watch Videos</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <div class="bg-[#4caf50]/10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-users text-[#4caf50] text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Expert Consultation</h3>
+                <p class="text-gray-300 text-sm mb-4">Connect with agricultural experts for personalized soil management advice and solutions.</p>
+                <a href="#" class="text-[#4caf50] font-medium flex items-center">
+                    <span>Book Consultation</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1a211d] text-gray-300 pt-12 pb-8 mt-12 relative">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/50 via-purple-400 to-purple-500/50"></div>
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="logo text-[#4caf50] text-3xl font-devanagari mb-4">Kisaan Saathi 🌾</div>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    Supporting farmers across India with sustainable solutions and resources.
+                </p>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-[#4d564f] text-center text-sm">
+                © 2023 Kisaan Saathi. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize nutrient chart
+            const ctx = document.getElementById('nutrientChart').getContext('2d');
+            const nutrientChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Nitrogen (N)', 'Phosphorus (P)', 'Potassium (K)', 'Calcium (Ca)', 'Magnesium (Mg)', 'Sulfur (S)'],
+                    datasets: [{
+                        label: 'Current Level',
+                        data: [32, 58, 65, 78, 60, 55],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }, {
+                        label: 'Optimal Range',
+                        data: [70, 65, 70, 80, 65, 60],
+                        type: 'line',
+                        borderColor: 'rgba(76, 175, 80, 1)',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(76, 175, 80, 1)',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Soil report upload interaction
+            const uploadArea = document.querySelector('.border-dashed');
+            const fileInput = document.getElementById('soil-report-upload');
+            
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    uploadArea.querySelector('p').textContent = `Selected: ${e.target.files[0].name}`;
+                    uploadArea.classList.add('border-[#4caf50]');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html> 

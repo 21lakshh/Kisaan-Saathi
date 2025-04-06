@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Assistant - Kisaan Saathi 🌾</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23395a7f'/%3E%3Cpath d='M30 40c0 0 5-10 20-10s20 10 20 10M30 60c0 0 5 10 20 10s20-10 20-10M50 40v20' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#1e3a23]">
+    <header class="header bg-[#1e3a23] p-4 flex justify-between items-center border-b border-[#4caf50]/20">
+        <div class="logo text-[#4caf50] text-4xl font-devanagari">Kisaan Saathi 🌾</div>
+        <nav class="nav-links flex space-x-6 text-lg">
+            <a href="/" class="text-white hover:text-[#4caf50]">Home</a>
+            <a href="/dashboard.html" class="text-white hover:text-[#4caf50]">Dashboard</a>
+            <a href="/farmer-assistant.html" class="text-[#4caf50] hover:text-[#4caf50]">Farmer Assistant</a>
+            <a href="/static/marketplace.html" class="text-white hover:text-[#4caf50]">Marketplace</a>
+        </nav>
+    </header>
+
+    <div class="container mx-auto py-8 px-4">
+        <!-- Page Title -->
+        <div class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Farmer Assistant</h1>
+            <p class="text-gray-300 text-lg">Get quick answers to all your farming and personal queries</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- Left Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-[#162619] rounded-xl p-5 border border-[#2d3d2f]/40 mb-6">
+                    <h2 class="text-xl font-bold text-white mb-4">Conversation Topics</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <button class="w-full text-left py-2 px-3 rounded-lg bg-[#4caf50]/20 text-[#4caf50] hover:bg-[#4caf50]/30 transition-all flex items-center">
+                                <i class="fas fa-seedling mr-2"></i>
+                                <span>Crop Management</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left py-2 px-3 rounded-lg text-white hover:bg-[#1a2e1d] transition-all flex items-center">
+                                <i class="fas fa-bug mr-2"></i>
+                                <span>Pest Control</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left py-2 px-3 rounded-lg text-white hover:bg-[#1a2e1d] transition-all flex items-center">
+                                <i class="fas fa-tint mr-2"></i>
+                                <span>Irrigation</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left py-2 px-3 rounded-lg text-white hover:bg-[#1a2e1d] transition-all flex items-center">
+                                <i class="fas fa-money-bill-wave mr-2"></i>
+                                <span>Financial Assistance</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left py-2 px-3 rounded-lg text-white hover:bg-[#1a2e1d] transition-all flex items-center">
+                                <i class="fas fa-clipboard-list mr-2"></i>
+                                <span>Government Schemes</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left py-2 px-3 rounded-lg text-white hover:bg-[#1a2e1d] transition-all flex items-center">
+                                <i class="fas fa-cloud-sun-rain mr-2"></i>
+                                <span>Weather Queries</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-[#162619] rounded-xl p-5 border border-[#2d3d2f]/40">
+                    <h2 class="text-xl font-bold text-white mb-4">Suggested Questions</h2>
+                    <ul class="space-y-3 text-sm">
+                        <li>
+                            <button class="w-full text-left text-gray-300 hover:text-[#4caf50]">
+                                How to protect rice crops from blast disease?
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left text-gray-300 hover:text-[#4caf50]">
+                                What fertilizers are best for tomato plants?
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left text-gray-300 hover:text-[#4caf50]">
+                                How can I apply for PM-KISAN scheme?
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left text-gray-300 hover:text-[#4caf50]">
+                                Best time to sow wheat in North India?
+                            </button>
+                        </li>
+                        <li>
+                            <button class="w-full text-left text-gray-300 hover:text-[#4caf50]">
+                                How to improve soil health in sandy areas?
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Chat Area -->
+            <div class="lg:col-span-4 flex flex-col">
+                <div class="bg-[#162619] rounded-xl border border-[#2d3d2f]/40 flex flex-col h-[600px]">
+                    <!-- Chat Header -->
+                    <div class="p-4 border-b border-[#2d3d2f] flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-3">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-semibold">Kisaan Assistant</h3>
+                            <span class="text-gray-400 text-xs flex items-center">
+                                <span class="w-2 h-2 rounded-full bg-green-500 mr-1"></span>
+                                Online
+                            </span>
+                        </div>
+                        <div class="ml-auto">
+                            <button class="text-gray-400 hover:text-white">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages -->
+                    <div class="flex-1 p-4 overflow-y-auto space-y-4" id="chat-messages">
+                        <!-- Bot Welcome Message -->
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-2 mt-1">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bg-[#1a2e1d] rounded-lg rounded-tl-none p-3 max-w-[80%]">
+                                <p class="text-white">Namaste! I'm your Kisaan Assistant. How can I help you today with your farming queries?</p>
+                            </div>
+                        </div>
+                        
+                        <!-- User Message -->
+                        <div class="flex items-start justify-end">
+                            <div class="bg-[#4caf50]/20 rounded-lg rounded-tr-none p-3 max-w-[80%]">
+                                <p class="text-white">What are the best practices for growing tomatoes in a small garden?</p>
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 ml-2 mt-1">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Bot Response with Rich Content -->
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-2 mt-1">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="space-y-3 max-w-[80%]">
+                                <div class="bg-[#1a2e1d] rounded-lg rounded-tl-none p-3">
+                                    <p class="text-white">Here are some best practices for growing tomatoes in a small garden:</p>
+                                    <ul class="text-gray-300 text-sm mt-2 space-y-1 list-disc list-inside">
+                                        <li>Choose determinate varieties for small spaces</li>
+                                        <li>Use vertical supports to maximize space</li>
+                                        <li>Plant in well-draining soil with organic matter</li>
+                                        <li>Water consistently at the base, not the leaves</li>
+                                        <li>Apply balanced fertilizer (5-10-10) after first fruit set</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Rich Content Card -->
+                                <div class="bg-[#1a2e1d] rounded-lg p-3">
+                                    <h4 class="text-white font-semibold mb-2">Recommended Varieties for Small Gardens:</h4>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div class="bg-[#162619] rounded-lg p-2 flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 mr-2">
+                                                <i class="fas fa-seedling"></i>
+                                            </div>
+                                            <span class="text-gray-300 text-sm">Roma VF</span>
+                                        </div>
+                                        <div class="bg-[#162619] rounded-lg p-2 flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 mr-2">
+                                                <i class="fas fa-seedling"></i>
+                                            </div>
+                                            <span class="text-gray-300 text-sm">Tiny Tim</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Follow-up Question -->
+                                <div class="bg-[#1a2e1d] rounded-lg p-3">
+                                    <p class="text-white text-sm mb-2">Would you like more information about:</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button class="bg-[#4caf50]/20 hover:bg-[#4caf50]/30 text-[#4caf50] text-xs rounded-full px-3 py-1">
+                                            Disease prevention
+                                        </button>
+                                        <button class="bg-[#4caf50]/20 hover:bg-[#4caf50]/30 text-[#4caf50] text-xs rounded-full px-3 py-1">
+                                            Watering schedule
+                                        </button>
+                                        <button class="bg-[#4caf50]/20 hover:bg-[#4caf50]/30 text-[#4caf50] text-xs rounded-full px-3 py-1">
+                                            Container growing
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Typing Indicator -->
+                        <div class="flex items-start hidden" id="typing-indicator">
+                            <div class="w-8 h-8 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-2 mt-1">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bg-[#1a2e1d] rounded-lg rounded-tl-none p-3 max-w-[80%] flex">
+                                <div class="typing">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input -->
+                    <div class="p-3 border-t border-[#2d3d2f]">
+                        <div class="flex items-center bg-[#1a2e1d] rounded-lg px-3 py-2">
+                            <button class="text-gray-400 hover:text-[#4caf50] mx-1">
+                                <i class="fas fa-image"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-[#4caf50] mx-1">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <input type="text" id="message-input" placeholder="Type your farming question here..." 
+                                   class="flex-1 bg-transparent text-white focus:outline-none px-3 py-1">
+                            <button id="send-button" class="bg-[#4caf50] hover:bg-[#3d9140] text-white rounded-lg w-10 h-10 flex items-center justify-center">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="text-xs text-gray-400 text-center mt-2">
+                            You can ask me about crops, weather, soil health, pests, government schemes, and more!
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Language & Other Settings -->
+                <div class="mt-4 flex justify-between">
+                    <div class="flex items-center">
+                        <label class="text-gray-300 text-sm mr-2">Language:</label>
+                        <select class="bg-[#1a2e1d] text-white px-3 py-1 rounded-lg text-sm focus:outline-none">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="pa">ਪੰਜਾਬੀ</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="ta">தமிழ்</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="text-gray-300 hover:text-white text-sm flex items-center">
+                            <i class="fas fa-download mr-1"></i>
+                            <span>Download Conversation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40 text-center">
+                <div class="w-16 h-16 bg-[#4caf50]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-language text-[#4caf50] text-2xl"></i>
+                </div>
+                <h3 class="text-white font-bold text-lg mb-2">Multilingual Support</h3>
+                <p class="text-gray-300 text-sm">Ask questions in 10+ Indian languages. Our assistant can understand and respond in your preferred language.</p>
+            </div>
+            
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40 text-center">
+                <div class="w-16 h-16 bg-[#4caf50]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-signal text-[#4caf50] text-2xl"></i>
+                </div>
+                <h3 class="text-white font-bold text-lg mb-2">Works Offline</h3>
+                <p class="text-gray-300 text-sm">Limited connectivity? No problem. Basic functions work offline, and sync when back online.</p>
+            </div>
+            
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40 text-center">
+                <div class="w-16 h-16 bg-[#4caf50]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-image text-[#4caf50] text-2xl"></i>
+                </div>
+                <h3 class="text-white font-bold text-lg mb-2">Image Recognition</h3>
+                <p class="text-gray-300 text-sm">Upload photos of plants, pests, or soil, and get instant identification and advice.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1a211d] text-gray-300 pt-12 pb-8 mt-12 relative">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/50 via-purple-400 to-purple-500/50"></div>
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="logo text-[#4caf50] text-3xl font-devanagari mb-4">Kisaan Saathi 🌾</div>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    Supporting farmers across India with sustainable solutions and resources.
+                </p>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-[#4d564f] text-center text-sm">
+                © 2023 Kisaan Saathi. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Style for typing animation -->
+    <style>
+        .typing {
+            display: flex;
+            align-items: center;
+            column-gap: 4px;
+        }
+        
+        .typing span {
+            height: 8px;
+            width: 8px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: block;
+            opacity: 0.4;
+        }
+        
+        .typing span:nth-child(1) {
+            animation: pulse 1s infinite;
+        }
+        
+        .typing span:nth-child(2) {
+            animation: pulse 1s infinite 0.2s;
+        }
+        
+        .typing span:nth-child(3) {
+            animation: pulse 1s infinite 0.4s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageInput = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-button');
+            const chatMessages = document.getElementById('chat-messages');
+            const typingIndicator = document.getElementById('typing-indicator');
+            
+            // Sample predefined responses (in a real app, these would come from a backend)
+            const responses = {
+                "weather": "Based on your location, the forecast shows sunny weather for the next 3 days with temperatures ranging from 25-32°C. Perfect for harvesting activities!",
+                "pest": "For general pest control in crops, consider integrated pest management (IPM). This includes crop rotation, biological controls, and minimal chemical treatments as a last resort.",
+                "loan": "You may be eligible for the Kisan Credit Card scheme, which provides loans at 4% interest. Additionally, PM-KISAN provides ₹6,000 annually to eligible farmers.",
+                "default": "I understand your question. Let me connect you with a specialist who can provide more detailed information. Meanwhile, you might find relevant information in our knowledge base."
+            };
+            
+            // Send message function
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (!message) return;
+                
+                // Add user message to chat
+                const userMessage = `
+                    <div class="flex items-start justify-end">
+                        <div class="bg-[#4caf50]/20 rounded-lg rounded-tr-none p-3 max-w-[80%]">
+                            <p class="text-white">${message}</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 ml-2 mt-1">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', userMessage);
+                
+                // Clear input
+                messageInput.value = '';
+                
+                // Show typing indicator
+                typingIndicator.classList.remove('hidden');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate response after delay
+                setTimeout(() => {
+                    typingIndicator.classList.add('hidden');
+                    
+                    // Determine response based on keywords
+                    let responseText = responses.default;
+                    if (message.toLowerCase().includes('weather')) {
+                        responseText = responses.weather;
+                    } else if (message.toLowerCase().includes('pest') || message.toLowerCase().includes('insect')) {
+                        responseText = responses.pest;
+                    } else if (message.toLowerCase().includes('loan') || message.toLowerCase().includes('money') || message.toLowerCase().includes('finance')) {
+                        responseText = responses.loan;
+                    }
+                    
+                    // Add bot response
+                    const botResponse = `
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-2 mt-1">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bg-[#1a2e1d] rounded-lg rounded-tl-none p-3 max-w-[80%]">
+                                <p class="text-white">${responseText}</p>
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.insertAdjacentHTML('beforeend', botResponse);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1500);
+            }
+            
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Suggested questions click handler
+            document.querySelectorAll('button.text-gray-300.hover\\:text-\\[\\#4caf50\\]').forEach(button => {
+                button.addEventListener('click', function() {
+                    messageInput.value = this.textContent.trim();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html> 

@@ -50,5 +50,36 @@ async def crop_care_page(request: Request):
 async def market_analysis_page(request: Request):
     return templates.TemplateResponse("market-analysis.html",{"request":request})
 
-import uvicorn
-uvicorn.run(app, port=8000)
+@app.get("/equipment-rental.html", response_class = HTMLResponse)
+async def equipment_rental_page(request: Request):
+    return templates.TemplateResponse("equipment-rental.html",{"request":request})
+
+@app.get("/farmer-assistant.html", response_class = HTMLResponse)
+async def farmer_assistant_page(request: Request):
+    return templates.TemplateResponse("farmer-assistant.html",{"request":request})
+
+@app.get("/soil-health.html", response_class = HTMLResponse)
+async def soil_health_page(request: Request):
+    return templates.TemplateResponse("soil-health.html",{"request":request})
+
+@app.get("/weather-advisory.html", response_class = HTMLResponse)
+async def weather_advisory_page(request: Request):
+    return templates.TemplateResponse("weather-advisory.html",{"request":request})
+
+# @app.get("/schemes.html", response_class = HTMLResponse)
+# async def schemes_page(request: Request):
+#     return templates.TemplateResponse("schemes.html",{"request":request})
+
+# @app.get("/waste-exchange.html", response_class = HTMLResponse)
+# async def waste_exchange_page(request: Request):
+#     return templates.TemplateResponse("waste-exchange.html",{"request":request})
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, port=8000)
+else:
+    # This is for deployment
+    pass
+
+# Remove the direct call to uvicorn.run at the module level
+# uvicorn.run(app, port=8000)

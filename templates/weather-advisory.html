@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Advisory - Kisaan Saathi 🌾</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23395a7f'/%3E%3Cpath d='M30 40c0 0 5-10 20-10s20 10 20 10M30 60c0 0 5 10 20 10s20-10 20-10M50 40v20' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#1e3a23]">
+    <header class="header bg-[#1e3a23] p-4 flex justify-between items-center border-b border-[#4caf50]/20">
+        <div class="logo text-[#4caf50] text-4xl font-devanagari">Kisaan Saathi 🌾</div>
+        <nav class="nav-links flex space-x-6 text-lg">
+            <a href="/" class="text-white hover:text-[#4caf50]">Home</a>
+            <a href="/dashboard.html" class="text-white hover:text-[#4caf50]">Dashboard</a>
+            <a href="/weather-advisory.html" class="text-[#4caf50] hover:text-[#4caf50]">Weather Advisory</a>
+            <a href="/static/marketplace.html" class="text-white hover:text-[#4caf50]">Marketplace</a>
+        </nav>
+    </header>
+
+    <div class="container mx-auto py-8 px-4">
+        <!-- Page Title -->
+        <div class="mb-10 flex justify-between items-end">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Weather Advisory & Crop Calendar</h1>
+                <p class="text-gray-300 text-lg">Hyperlocal weather forecasts and crop-specific recommendations</p>
+            </div>
+            <div class="relative">
+                <input type="text" id="location-input" placeholder="Search location..." 
+                    class="bg-[#162619] text-white px-4 py-2 rounded-lg border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                <button id="detect-location" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4caf50]">
+                    <i class="fas fa-location-crosshairs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Current Weather Card -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <div class="mb-4 flex justify-between items-start">
+                    <h2 class="text-2xl font-bold text-white">Current Weather</h2>
+                    <span id="last-updated" class="text-xs text-gray-400">Updated: 10:30 AM</span>
+                </div>
+                
+                <div class="text-center mb-6">
+                    <div class="inline-block">
+                        <div class="w-24 h-24 mx-auto">
+                            <i class="fas fa-sun text-yellow-400 text-6xl"></i>
+                        </div>
+                        <div class="text-4xl font-bold text-white mt-3">32°C</div>
+                        <div class="text-gray-400">Sunny</div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-[#1a2e1d] rounded-lg p-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-wind text-[#4caf50]"></i>
+                            <span class="text-gray-400 text-sm">Wind</span>
+                        </div>
+                        <div class="text-white font-semibold mt-1">12 km/h</div>
+                    </div>
+                    <div class="bg-[#1a2e1d] rounded-lg p-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-tint text-[#4caf50]"></i>
+                            <span class="text-gray-400 text-sm">Humidity</span>
+                        </div>
+                        <div class="text-white font-semibold mt-1">60%</div>
+                    </div>
+                    <div class="bg-[#1a2e1d] rounded-lg p-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-cloud-rain text-[#4caf50]"></i>
+                            <span class="text-gray-400 text-sm">Rainfall</span>
+                        </div>
+                        <div class="text-white font-semibold mt-1">0 mm</div>
+                    </div>
+                    <div class="bg-[#1a2e1d] rounded-lg p-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-thermometer-half text-[#4caf50]"></i>
+                            <span class="text-gray-400 text-sm">Soil Temp</span>
+                        </div>
+                        <div class="text-white font-semibold mt-1">28°C</div>
+                    </div>
+                </div>
+                
+                <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mb-4">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mt-1"></i>
+                        <div>
+                            <h4 class="text-white font-semibold">Weather Alert</h4>
+                            <p class="text-gray-300 text-sm">High temperatures expected for next 3 days. Consider evening irrigation.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-6">
+                    <button id="refresh-weather" class="bg-[#1a2e1d] hover:bg-[#2a3e2d] text-white py-2 px-4 rounded-lg transition-all inline-flex items-center gap-2">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Refresh Data</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 7-Day Forecast -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-2xl font-bold text-white mb-6">7-Day Forecast</h2>
+                
+                <div class="space-y-4">
+                    <!-- Today -->
+                    <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-sun text-yellow-400 text-2xl"></i>
+                            <div>
+                                <div class="text-white font-semibold">Today</div>
+                                <div class="text-gray-400 text-sm">May 25</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-white font-bold">32°C</div>
+                            <div class="text-gray-400 text-sm">24°C</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tomorrow -->
+                    <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-cloud-sun text-gray-300 text-2xl"></i>
+                            <div>
+                                <div class="text-white font-semibold">Tomorrow</div>
+                                <div class="text-gray-400 text-sm">May 26</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-white font-bold">29°C</div>
+                            <div class="text-gray-400 text-sm">22°C</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 3 -->
+                    <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-cloud-rain text-blue-400 text-2xl"></i>
+                            <div>
+                                <div class="text-white font-semibold">Friday</div>
+                                <div class="text-gray-400 text-sm">May 27</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-white font-bold">26°C</div>
+                            <div class="text-gray-400 text-sm">21°C</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Day 4 -->
+                    <div class="bg-[#1a2e1d] rounded-lg p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <i class="fas fa-cloud text-gray-400 text-2xl"></i>
+                            <div>
+                                <div class="text-white font-semibold">Saturday</div>
+                                <div class="text-gray-400 text-sm">May 28</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-white font-bold">27°C</div>
+                            <div class="text-gray-400 text-sm">20°C</div>
+                        </div>
+                    </div>
+                    
+                    <!-- View More Button -->
+                    <button class="w-full text-center bg-[#2a3e2d] hover:bg-[#3a4e3d] rounded-lg py-2 text-[#4caf50] font-semibold transition-all">
+                        View Full 7-Day Forecast
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Crop Calendar & Advice -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-2xl font-bold text-white mb-4">Crop Calendar & Advice</h2>
+                
+                <!-- Crop Selection -->
+                <div class="mb-6">
+                    <label class="text-gray-300 text-sm mb-2 block">Select Your Crop</label>
+                    <div class="relative">
+                        <select id="crop-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#4caf50] border border-[#4caf50]/30">
+                            <option value="rice">Rice</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="maize">Maize</option>
+                            <option value="sugarcane">Sugarcane</option>
+                            <option value="cotton">Cotton</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Crop Stage -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <label class="text-gray-300 text-sm">Current Stage</label>
+                        <span class="text-xs text-[#4caf50]">Week 3 of 16</span>
+                    </div>
+                    
+                    <div class="bg-[#1a2e1d] rounded-lg p-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-[#4caf50]/20 p-2 rounded-full">
+                                <i class="fas fa-leaf text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Vegetation Stage</h4>
+                                <p class="text-gray-400 text-xs">May 10 - June 15</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline -->
+                    <div class="mb-4">
+                        <div class="h-2 bg-[#1a2e1d] rounded-full overflow-hidden">
+                            <div class="h-full bg-[#4caf50] rounded-full" style="width: 30%;"></div>
+                        </div>
+                        <div class="flex justify-between mt-1 text-xs text-gray-400">
+                            <span>Sowing</span>
+                            <span>Vegetation</span>
+                            <span>Flowering</span>
+                            <span>Harvest</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Weather-based Recommendations -->
+                <div class="space-y-4 mb-4">
+                    <h3 class="text-white font-semibold text-lg">Today's Recommendations</h3>
+                    
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-[#4caf50]/20 p-2 rounded-full mt-1">
+                                <i class="fas fa-tint text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Irrigation Needed</h4>
+                                <p class="text-gray-300 text-sm">Due to high temperatures, irrigate in the evening to reduce water loss.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-[#4caf50]/20 p-2 rounded-full mt-1">
+                                <i class="fas fa-bug text-[#4caf50]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Pest Alert</h4>
+                                <p class="text-gray-300 text-sm">Current humidity levels increase risk of aphids. Consider inspection.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <a href="#" class="bg-[#4caf50] hover:bg-[#3d9a3d] text-white py-3 px-6 rounded-lg transition-all inline-flex items-center gap-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>View Full Crop Calendar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rainfall & Temperature Charts -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-xl font-bold text-white mb-6">Rainfall Forecast (mm)</h2>
+                <div class="h-[300px]">
+                    <canvas id="rainfallChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-xl font-bold text-white mb-6">Temperature Trends (°C)</h2>
+                <div class="h-[300px]">
+                    <canvas id="temperatureChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seasonal Outlook -->
+        <div class="mt-8 bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+            <h2 class="text-2xl font-bold text-white mb-6">Seasonal Outlook</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#1a2e1d] rounded-lg p-4">
+                    <h3 class="text-white font-semibold mb-3">June - August</h3>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-cloud-showers-heavy text-blue-400 text-3xl mt-1"></i>
+                        <div>
+                            <h4 class="text-white">Monsoon Season</h4>
+                            <p class="text-gray-400 text-sm">Expected rainfall: Above average</p>
+                            <p class="text-gray-400 text-sm">Chance of flooding: Moderate</p>
+                            <div class="mt-2 text-[#4caf50] text-sm">
+                                <strong>Recommendation:</strong> Prepare drainage channels
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-[#1a2e1d] rounded-lg p-4">
+                    <h3 class="text-white font-semibold mb-3">September - November</h3>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-cloud-sun text-yellow-400 text-3xl mt-1"></i>
+                        <div>
+                            <h4 class="text-white">Post-Monsoon</h4>
+                            <p class="text-gray-400 text-sm">Expected rainfall: Normal</p>
+                            <p class="text-gray-400 text-sm">Temperature: Slightly above average</p>
+                            <div class="mt-2 text-[#4caf50] text-sm">
+                                <strong>Recommendation:</strong> Ideal for rabi crop sowing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-[#1a2e1d] rounded-lg p-4">
+                    <h3 class="text-white font-semibold mb-3">December - February</h3>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-snowflake text-blue-200 text-3xl mt-1"></i>
+                        <div>
+                            <h4 class="text-white">Winter Season</h4>
+                            <p class="text-gray-400 text-sm">Expected rainfall: Below average</p>
+                            <p class="text-gray-400 text-sm">Risk of frost: Low</p>
+                            <div class="mt-2 text-[#4caf50] text-sm">
+                                <strong>Recommendation:</strong> Minimal irrigation needed
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1a211d] text-gray-300 pt-12 pb-8 mt-12 relative">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/50 via-purple-400 to-purple-500/50"></div>
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="logo text-[#4caf50] text-3xl font-devanagari mb-4">Kisaan Saathi 🌾</div>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    Supporting farmers across India with sustainable solutions and resources.
+                </p>
+                <div class="flex justify-center space-x-6 mt-6">
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-[#4d564f] text-center text-sm">
+                © 2023 Kisaan Saathi. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart Initialization Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Rainfall Chart
+            const rainfallCtx = document.getElementById('rainfallChart').getContext('2d');
+            const rainfallChart = new Chart(rainfallCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Today', 'Tomorrow', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday'],
+                    datasets: [{
+                        label: 'Rainfall (mm)',
+                        data: [0, 2, 15, 8, 2, 0, 0],
+                        backgroundColor: 'rgba(76, 175, 80, 0.5)',
+                        borderColor: '#4caf50',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Initialize Temperature Chart
+            const tempCtx = document.getElementById('temperatureChart').getContext('2d');
+            const tempChart = new Chart(tempCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Today', 'Tomorrow', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday'],
+                    datasets: [{
+                        label: 'High',
+                        data: [32, 29, 26, 27, 28, 30, 31],
+                        backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                        borderColor: '#ff9800',
+                        borderWidth: 2,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Low',
+                        data: [24, 22, 21, 20, 22, 23, 24],
+                        backgroundColor: 'rgba(3, 169, 244, 0.2)',
+                        borderColor: '#03a9f4',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Location detection
+            document.getElementById('detect-location').addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        // In a real app, you would use the coordinates to fetch weather data
+                        console.log('Location detected:', position.coords.latitude, position.coords.longitude);
+                        document.getElementById('location-input').value = 'Detected Location';
+                        // You would call your weather API here
+                    });
+                }
+            });
+            
+            // Refresh weather data
+            document.getElementById('refresh-weather').addEventListener('click', function() {
+                this.classList.add('animate-spin');
+                setTimeout(() => {
+                    this.classList.remove('animate-spin');
+                    document.getElementById('last-updated').textContent = 'Updated: ' + new Date().toLocaleTimeString();
+                }, 1000);
+            });
+            
+            // Crop selection change
+            document.getElementById('crop-select').addEventListener('change', function() {
+                // In a real app, you would update the crop calendar based on selection
+                console.log('Crop selected:', this.value);
+            });
+        });
+    </script>
+</body>
+
+</html> 
