@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import os
 import logging
 from fastapi.staticfiles import StaticFiles
+from prediction import model_response
 import pandas as pd
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -74,12 +75,38 @@ async def weather_advisory_page(request: Request):
 # async def waste_exchange_page(request: Request):
 #     return templates.TemplateResponse("waste-exchange.html",{"request":request})
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, port=8000)
-else:
-    # This is for deployment
-    pass
+@app.post("/disease_prediction")
+async def disease_prediction(file: UploadFile = File(...), selected_language: str = Form("")):
+    try:
+        # Read the uploaded image file
+        contents = await file.read()
+        
+        # Validate the image format
+        try:
+            img = Image.open(io.BytesIO(contents))
+            img.verify()
+        except Exception as e:
+            logger.error(f"Invalid image format: {str(e)}")
+            raise HTTPException(status_code=400, detail=f"Invalid image format: {str(e)}")
 
-# Remove the direct call to uvicorn.run at the module level
-# uvicorn.run(app, port=8000)
+        # Save the image temporarily
+        temp_image_path = f"temp_{file.filename}"
+        with open(temp_image_path, "wb") as temp_file:
+            temp_file.write(contents)
+
+        # Call the classification function
+        result = model_response(temp_image_path, selected_language)
+        
+        # Remove the temporary image file after processing
+        os.remove(temp_image_path)
+        
+        return JSONResponse(status_code=200, content=result)
+    
+    except Exception as e:
+        logger.error(f"Unexpected error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+
+
+
+import uvicorn
+uvicorn.run(app, port=8000)

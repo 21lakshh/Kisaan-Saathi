@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageContainer = document.getElementById('image-container');
     const imagePreview = document.getElementById('image-preview');
     const removeBtn = document.getElementById('remove-image');
-    const queryInput = document.getElementById('query-input');
+    const languageSelect = document.getElementById('language-select');
     const submitQuery = document.getElementById('submit-query');
     const responseContainer = document.getElementById('response-container');
     const errorContainer = document.getElementById('error-container');
@@ -68,26 +68,27 @@ document.addEventListener('DOMContentLoaded', function() {
         imageUpload.value = ''; // Clear the file input
     });
 
-    // Submit Query
+    // Submit Selected language
     submitQuery.addEventListener('click', async (event) => {
         event.preventDefault(); // Prevent default form submission
         const image = imageUpload.files[0];
-        const query = queryInput.value;
+        const selectedLanguage = languageSelect.value;
+        console.log(selectedLanguage)
 
-        if (!image || !query) {
-            showError('⚠️ Please upload an image and enter a query.');
+        if (!image || !selectedLanguage) {
+            showError('⚠️ Please upload an image and Selected language.');
             return;
         }
         const formData = new FormData();
 
         formData.append('file', image);
-        formData.append('additional_info', query);
+        formData.append('selectedLanguage',selectedLanguage)
         
         try {
             submitQuery.disabled = true;
             submitQuery.textContent = 'Processing... ⏳';
 
-            const response = await fetch('/upload_and_query', {
+            const response = await fetch('/disease_prediction', {
                 method: 'POST',
                 body: formData
             });
@@ -103,25 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
             responseContainer.innerHTML = marked.parse(responseText);
             responseContainer.classList.remove('hidden');
             errorContainer.classList.add('hidden');
-
-            // If you want to create a hotspot, uncomment and implement this part
-            /*
-            const formData2 = new FormData();
-            formData2.append('file', image);
-            formData2.append('latitude', latitude); // Ensure latitude is defined
-            formData2.append('longitude', longitude); // Ensure longitude is defined
-            formData2.append('response', responseText);
-            formData2.append('time', getFormattedDateTime());
-
-            const hotspotResponse = await fetch('/create_hotspot', {
-                method: 'POST',
-                body: formData2
-            });
-
-            if (!hotspotResponse.ok) {
-                throw new Error(`Server error: ${hotspotResponse.status} ${hotspotResponse.statusText}`);
-            }
-            */
 
         } catch (error) {
             console.error('Error:', error);
