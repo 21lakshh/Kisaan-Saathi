@@ -1,2 +1,2 @@
 .env 
-/Disease prediction Model/trained_model/*.h5
+*.h5
