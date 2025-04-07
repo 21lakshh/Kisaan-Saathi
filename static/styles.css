@@ -45,7 +45,10 @@ body {
     display: flex;
     gap: 2rem;
 }
-
+#response-container{
+    color: antiquewhite;
+    /* background-color: white; */
+}
 .nav-links a {
     text-decoration: none;
     color: var(--dark);

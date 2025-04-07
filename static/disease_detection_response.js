@@ -70,44 +70,91 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Submit Selected language
     submitQuery.addEventListener('click', async (event) => {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
         const image = imageUpload.files[0];
         const selectedLanguage = languageSelect.value;
-        console.log(selectedLanguage)
 
-        if (!image || !selectedLanguage) {
-            showError('⚠️ Please upload an image and Selected language.');
+        // Enhanced validation
+        if (!image) {
+            showError('⚠️ Please upload an image before submitting.');
             return;
         }
-        const formData = new FormData();
+        if (!selectedLanguage) {
+            showError('⚠️ Please select a language.');
+            return;
+        }
 
+        // Log the selected language for debugging
+        console.log('Selected language:', selectedLanguage);
+        console.log('Language type:', typeof selectedLanguage);
+
+        const formData = new FormData();
         formData.append('file', image);
-        formData.append('selectedLanguage',selectedLanguage)
+        formData.append('selected_language', selectedLanguage);
         
         try {
             submitQuery.disabled = true;
             submitQuery.textContent = 'Processing... ⏳';
+
+            console.log('Sending request with:', {
+                imageName: image.name,
+                imageSize: image.size,
+                selectedLanguage: selectedLanguage
+            });
 
             const response = await fetch('/disease_prediction', {
                 method: 'POST',
                 body: formData
             });
 
-            const result = await response.json();
-            console.log("API Response:", result);
+            console.log('Response status:', response.status);
+            console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
-            if (!response.ok || !result.choices || !result.choices[0] || !result.choices[0].message || !result.choices[0].message.content) {
-                throw new Error(result.detail || 'An error occurred while processing your request.');
+            // Get the response text first
+            const responseText = await response.text();
+            console.log('Raw Server Response:', responseText);
+
+            // Try to parse as JSON
+            let result;
+            try {
+                result = JSON.parse(responseText);
+                console.log('Parsed JSON Response:', result);
+            } catch (e) {
+                console.error('Failed to parse JSON:', e);
+                console.error('Response text that failed to parse:', responseText);
+                throw new Error(`Server returned invalid JSON: ${responseText.slice(0, 100)}`);
+            }
+
+            // Handle HTTP errors
+            if (!response.ok) {
+                console.error('Server Error Response:', result);
+                const errorMessage = result.detail || result.error || `Server Error (${response.status})`;
+                throw new Error(errorMessage);
+            }
+
+            // Check for error in response
+            if (result.error) {
+                console.error('Error in response:', result.error);
+                throw new Error(result.error);
             }
             
-            const responseText = result.choices[0].message.content;
-            responseContainer.innerHTML = marked.parse(responseText);
+            // Validate response structure
+            if (!result.choices?.[0]?.message?.content) {
+                console.error('Invalid Response Structure:', result);
+                throw new Error('Invalid response structure from server. Expected choices[0].message.content');
+            }
+            
+            // Display the response
+            responseContainer.innerHTML = marked.parse(result.choices[0].message.content);
             responseContainer.classList.remove('hidden');
             errorContainer.classList.add('hidden');
 
         } catch (error) {
-            console.error('Error:', error);
-            showError(error.message);
+            console.error('Detailed Error:', error);
+            console.error('Error stack:', error.stack);
+            // Handle both string and object errors
+            const errorMessage = error.message || (typeof error === 'object' ? JSON.stringify(error) : String(error));
+            showError(errorMessage);
         } finally {
             submitQuery.disabled = false;
             submitQuery.textContent = '🚀 Submit Query';
@@ -115,7 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function showError(message) {
-        errorText.textContent = message;
+        // Ensure message is a string
+        const errorMessage = typeof message === 'string' ? message : JSON.stringify(message);
+        errorText.textContent = errorMessage;
         errorContainer.classList.remove('hidden');
         responseContainer.classList.add('hidden');
         imageUpload.value = ''; // Clear the file input on error

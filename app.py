@@ -76,35 +76,71 @@ async def weather_advisory_page(request: Request):
 #     return templates.TemplateResponse("waste-exchange.html",{"request":request})
 
 @app.post("/disease_prediction")
-async def disease_prediction(file: UploadFile = File(...), selected_language: str = Form("")):
+async def disease_prediction(file: UploadFile = File(...), selected_language: str = Form(...)):
     try:
+        logger.info(f"Received request with file: {file.filename}, selected_language: {selected_language}")
+        
+        # Validate language
+        if not selected_language:
+            raise HTTPException(status_code=400, detail="Language is required")
+            
         # Read the uploaded image file
         contents = await file.read()
+        logger.info(f"Read {len(contents)} bytes from uploaded file")
         
         # Validate the image format
         try:
             img = Image.open(io.BytesIO(contents))
             img.verify()
+            logger.info("Image format validated successfully")
         except Exception as e:
-            logger.error(f"Invalid image format: {str(e)}")
+            logger.error(f"Invalid image format: {str(e)}", exc_info=True)
             raise HTTPException(status_code=400, detail=f"Invalid image format: {str(e)}")
 
         # Save the image temporarily
         temp_image_path = f"temp_{file.filename}"
-        with open(temp_image_path, "wb") as temp_file:
-            temp_file.write(contents)
+        try:
+            with open(temp_image_path, "wb") as temp_file:
+                temp_file.write(contents)
+            logger.info(f"Saved temporary file to: {temp_image_path}")
 
-        # Call the classification function
-        result = model_response(temp_image_path, selected_language)
-        
-        # Remove the temporary image file after processing
-        os.remove(temp_image_path)
-        
-        return JSONResponse(status_code=200, content=result)
+            # Call the classification function
+            logger.info(f"Processing image with language: {selected_language}")
+            response = model_response(temp_image_path, selected_language)
+            logger.info(f"Model response type: {type(response)}")
+            logger.info(f"Model response: {response}")
+            
+            # Check if there was an error in the response
+            if "error" in response:
+                logger.error(f"Model returned error: {response['error']}")
+                raise HTTPException(status_code=500, detail=response["error"])
+            
+            # Return the response directly as it's already in the correct format
+            return JSONResponse(status_code=200, content=response)
+            
+        except Exception as e:
+            logger.error(f"Error in model_response: {str(e)}", exc_info=True)
+            error_detail = str(e)
+            if hasattr(e, 'detail'):
+                error_detail = e.detail
+            raise HTTPException(status_code=500, detail=f"Error in model processing: {error_detail}")
+        finally:
+            # Clean up the temporary file
+            if os.path.exists(temp_image_path):
+                os.remove(temp_image_path)
+                logger.info(f"Removed temporary file: {temp_image_path}")
     
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Unexpected error: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+        logger.error(f"Unexpected error: {str(e)}", exc_info=True)
+        error_detail = str(e)
+        if hasattr(e, 'detail'):
+            error_detail = e.detail
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unexpected error: {error_detail}"
+        )
 
 
 
