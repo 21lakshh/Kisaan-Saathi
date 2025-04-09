@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Form, Request, HTTPException 
 from fastapi.templating import Jinja2Templates 
-from fastapi.responses import HTMLResponse, JSONResponse 
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 import base64
 import requests
 import io
@@ -11,6 +11,9 @@ import logging
 from fastapi.staticfiles import StaticFiles
 from prediction import model_response
 import pandas as pd
+import google.generativeai as genai
+from pydantic import BaseModel
+
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -28,6 +31,15 @@ templates = Jinja2Templates(directory="templates")
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 DATA_GOV_API_KEY = os.getenv("DATA_GOV_API_KEY")
+
+# Configure Gemini API
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY is not set in the .env file")
+
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ API KEY is not set in the .env file")
@@ -74,9 +86,9 @@ async def soil_health_page(request: Request):
 async def weather_advisory_page(request: Request):
     return templates.TemplateResponse("weather-advisory.html",{"request":request})
 
-# @app.get("/schemes.html", response_class = HTMLResponse)
-# async def schemes_page(request: Request):
-#     return templates.TemplateResponse("schemes.html",{"request":request})
+@app.get("/schemes.html", response_class = HTMLResponse)
+async def schemes_page(request: Request):
+    return templates.TemplateResponse("schemes.html",{"request":request})
 
 # @app.get("/waste-exchange.html", response_class = HTMLResponse)
 # async def waste_exchange_page(request: Request):
@@ -149,7 +161,37 @@ async def disease_prediction(file: UploadFile = File(...), selected_language: st
             detail=f"Unexpected error: {error_detail}"
         )
 
-
+@app.post("/api/chat")
+async def chat(request: Request):
+    try:
+        # Get the question from the request body
+        body = await request.json()
+        question = body.get('question', '')
+        
+        if not question:
+            raise HTTPException(status_code=400, detail="Question is required")
+            
+        # Generate response using Gemini
+        response = model.generate_content(
+            f"""You are an AI assistant helping farmers understand government schemes. 
+            Please provide detailed, accurate information about the following question related to government schemes for farmers.
+            Format your response with:
+            - Use **bold** for important points
+            - Use *italics* for emphasis
+            - Include relevant links where applicable
+            - Use bullet points for lists
+            - Add line breaks between sections
+            - Keep the language simple and easy to understand
+            
+            If the question is not about government schemes, politely inform the user that you can only help with government scheme related queries.
+            
+            Question: {question}"""
+        )
+        
+        return JSONResponse(content={"response": response.text})
+    except Exception as e:
+        logger.error(f"Error in chat: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 import uvicorn
 uvicorn.run(app, port=8000)
