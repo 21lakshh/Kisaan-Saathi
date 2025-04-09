@@ -27,6 +27,7 @@ templates = Jinja2Templates(directory="templates")
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+DATA_GOV_API_KEY = os.getenv("DATA_GOV_API_KEY")
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ API KEY is not set in the .env file")
@@ -49,10 +50,16 @@ async def crop_care_page(request: Request):
 
 @app.get("/market-analysis.html", response_class = HTMLResponse)
 async def market_analysis_page(request: Request):
-    return templates.TemplateResponse("market-analysis.html",{"request":request})
+    return templates.TemplateResponse(
+        "market-analysis.html",
+        {
+            "request": request,
+            "data_gov_api_key": DATA_GOV_API_KEY
+        }
+    )
 
 @app.get("/equipment-rental.html", response_class = HTMLResponse)
-async def equipment_rental_page(request: Request):
+async def equipment_rental_page(request: Request):  
     return templates.TemplateResponse("equipment-rental.html",{"request":request})
 
 @app.get("/farmer-assistant.html", response_class = HTMLResponse)

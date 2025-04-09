@@ -11,482 +11,112 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="/static/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/market-prices.js"></script>
 </head>
 
 <body class="bg-[#1e3a23]">
-    <header class="header bg-[#1e3a23] p-4 flex justify-between items-center border-b border-[#4caf50]/20">
-        <div class="logo text-[#4caf50] text-4xl font-devanagari">Kisaan Saathi 🌾</div>
-        <nav class="nav-links flex space-x-6 text-lg">
-            <a href="/" class="text-white hover:text-[#4caf50]">Home</a>
-            <a href="/dashboard.html" class="text-white hover:text-[#4caf50]">Dashboard</a>
-            <a href="/static/marketplace.html" class="text-white hover:text-[#4caf50]">Marketplace</a>
-            <a href="/donation.html" class="text-white hover:text-[#4caf50]">Donate</a>
-        </nav>
+    <!-- Simple Header -->
+    <header class="bg-[#1e3a23] p-4 flex justify-between items-center">
+        <div class="text-[#4caf50] text-3xl font-bold">Kisaan Saathi 🌾</div>
+        <a href="/dashboard.html" class="text-white hover:text-[#4caf50] text-lg flex items-center">
+            <i class="fas fa-chart-line mr-2"></i>
+            Go to Dashboard
+        </a>
     </header>
 
-    <div class="container mx-auto py-8 px-4">
-        <!-- Breadcrumb Navigation -->
-        <div class="flex items-center gap-2 text-gray-400 text-sm mb-8">
-            <a href="/" class="hover:text-[#4caf50]">Home</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <a href="/dashboard.html" class="hover:text-[#4caf50]">Dashboard</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <span class="text-[#4caf50]">Market Analysis</span>
-        </div>
-
+    <div class="container mx-auto py-6 px-4">
         <!-- Page Title -->
-        <div class="mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Market Analysis</h1>
-            <p class="text-gray-300 text-lg">Track real-time crop prices and market demand to maximize your profit.</p>
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white mb-2">Market Analysis</h1>
+            <p class="text-gray-300">Real-time crop prices and market trends</p>
         </div>
 
         <!-- Main Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Column - Price Table and Chart -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Filter Controls -->
-                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-1">
-                            <label class="block text-gray-300 text-sm mb-2">Select Crop</label>
-                            <select id="crop-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
-                                <option value="rice">Rice</option>
-                                <option value="wheat" selected>Wheat</option>
-                                <option value="maize">Maize</option>
-                                <option value="potato">Potato</option>
-                                <option value="tomato">Tomato</option>
-                                <option value="cotton">Cotton</option>
-                                <option value="sugarcane">Sugarcane</option>
-                            </select>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-gray-300 text-sm mb-2">Select State</label>
-                            <select id="state-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
-                                <option value="punjab" selected>Punjab</option>
-                                <option value="haryana">Haryana</option>
-                                <option value="up">Uttar Pradesh</option>
-                                <option value="bihar">Bihar</option>
-                                <option value="mp">Madhya Pradesh</option>
-                                <option value="maharashtra">Maharashtra</option>
-                                <option value="gujarat">Gujarat</option>
-                            </select>
-                        </div>
-                        <div class="flex-1">
-                            <label class="block text-gray-300 text-sm mb-2">Time Period</label>
-                            <select id="time-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
-                                <option value="1week">1 Week</option>
-                                <option value="1month" selected>1 Month</option>
-                                <option value="3months">3 Months</option>
-                                <option value="6months">6 Months</option>
-                                <option value="1year">1 Year</option>
-                            </select>
-                        </div>
+        <div class="max-w-4xl mx-auto">
+            <!-- Filter Controls -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-2">Select Crop</label>
+                        <select id="crop-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                            <option value="Tomato">Tomato</option>
+                            <option value="Potato">Potato</option>
+                            <option value="Onion">Onion</option>
+                            <option value="Rice">Rice</option>
+                            <option value="Wheat">Wheat</option>
+                            <option value="Maize">Maize</option>
+                        </select>
                     </div>
-                </div>
-
-                <!-- Price Chart -->
-                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
-                    <h2 class="text-2xl font-bold text-white mb-6">Wheat Price Trend</h2>
-                    <div class="bg-[#1a2e1d] p-4 rounded-lg h-80">
-                        <canvas id="priceChart"></canvas>
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-2">Select State</label>
+                        <select id="state-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                            <option value="">All States</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                        </select>
                     </div>
-                    <div class="mt-4 flex items-center justify-between text-sm">
-                        <div class="text-gray-400">Updated: May 22, 2023</div>
-                        <div class="flex items-center gap-6">
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-[#4caf50] rounded-full"></div>
-                                <span class="text-gray-300">Local Market</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                <span class="text-gray-300">MSP</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
-                                <span class="text-gray-300">National Avg.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Price Table -->
-                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
-                    <h2 class="text-2xl font-bold text-white mb-6">Current Market Prices</h2>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-full">
-                            <thead class="bg-[#1a2e1d]">
-                                <tr>
-                                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Market</th>
-                                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Location</th>
-                                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Price (₹/Quintal)</th>
-                                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Change</th>
-                                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-[#2d3d2f]">
-                                <tr class="bg-[#162619]/70">
-                                    <td class="py-3 px-4 text-sm text-white font-medium">
-                                        Khanna Mandi
-                                        <span class="ml-2 px-1.5 py-0.5 bg-green-500/20 text-green-500 rounded text-xs">Recommended</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm text-gray-300">Khanna, Punjab</td>
-                                    <td class="py-3 px-4 text-sm text-white font-medium">₹2,150</td>
-                                    <td class="py-3 px-4 text-sm">
-                                        <span class="text-green-500 flex items-center gap-1">
-                                            <i class="fas fa-caret-up"></i> +₹50
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm text-gray-400">Today</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-sm text-white">Ludhiana Grain Market</td>
-                                    <td class="py-3 px-4 text-sm text-gray-300">Ludhiana, Punjab</td>
-                                    <td class="py-3 px-4 text-sm text-white font-medium">₹2,120</td>
-                                    <td class="py-3 px-4 text-sm">
-                                        <span class="text-green-500 flex items-center gap-1">
-                                            <i class="fas fa-caret-up"></i> +₹30
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm text-gray-400">Today</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-sm text-white">Jalandhar APMC</td>
-                                    <td class="py-3 px-4 text-sm text-gray-300">Jalandhar, Punjab</td>
-                                    <td class="py-3 px-4 text-sm text-white font-medium">₹2,080</td>
-                                    <td class="py-3 px-4 text-sm">
-                                        <span class="text-red-500 flex items-center gap-1">
-                                            <i class="fas fa-caret-down"></i> -₹20
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm text-gray-400">Yesterday</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-sm text-white">Amritsar Mandi</td>
-                                    <td class="py-3 px-4 text-sm text-gray-300">Amritsar, Punjab</td>
-                                    <td class="py-3 px-4 text-sm text-white font-medium">₹2,100</td>
-                                    <td class="py-3 px-4 text-sm">
-                                        <span class="text-gray-400">No change</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm text-gray-400">2 days ago</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-4 text-sm text-white">MSP</td>
-                                    <td class="py-3 px-4 text-sm text-gray-300">Nationwide</td>
-                                    <td class="py-3 px-4 text-sm text-white font-medium">₹2,015</td>
-                                    <td class="py-3 px-4 text-sm">
-                                        <span class="text-gray-400">Fixed</span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm text-gray-400">Current Season</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-2">Select Date</label>
+                        <input type="date" id="date-select" class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column - Market Insights and Alerts -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Market Insights -->
-                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
-                    <h3 class="text-xl font-bold text-white mb-4">Market Insights</h3>
-                    
-                    <div class="space-y-5">
-                        <div>
-                            <h4 class="text-[#4caf50] font-medium mb-2">Current Demand</h4>
-                            <div class="flex items-center gap-3 mb-3">
-                                <div class="w-full bg-[#1a2e1d] rounded-full h-2.5">
-                                    <div class="bg-[#4caf50] h-2.5 rounded-full" style="width: 85%"></div>
-                                </div>
-                                <span class="text-white font-medium">High</span>
-                            </div>
-                            <p class="text-gray-300 text-sm">Wheat demand is high in Punjab with prices above MSP. Export demand driving prices up.</p>
-                        </div>
-                        
-                        <div>
-                            <h4 class="text-[#4caf50] font-medium mb-2">Price Forecast</h4>
-                            <div class="p-3 bg-[#1a2e1d] rounded-lg flex items-center gap-3">
-                                <div class="bg-green-500/20 p-2 rounded-full">
-                                    <i class="fas fa-arrow-trend-up text-green-500"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white font-medium">Expected to rise 3-5% next week</p>
-                                    <p class="text-gray-400 text-xs">Based on seasonal trends and demand patterns</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h4 class="text-[#4caf50] font-medium mb-2">Best Selling Time</h4>
-                            <div class="p-3 bg-[#1a2e1d] rounded-lg">
-                                <p class="text-white">Recommendation: <span class="font-medium text-[#4caf50]">Sell within 1-2 weeks</span></p>
-                                <p class="text-gray-400 text-sm mt-1">Prices typically decline after June as new harvests enter the market.</p>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Price Chart -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Price Trend</h2>
+                    <p id="data-date" class="text-gray-300 text-sm">Loading data...</p>
                 </div>
-
-                <!-- Price Alerts -->
-                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
-                    <h3 class="text-xl font-bold text-white mb-4">Price Alerts</h3>
-                    <p class="text-gray-300 text-sm mb-4">Set alerts to be notified when prices reach your target.</p>
-                    
-                    <div class="mb-4">
-                        <label class="block text-gray-300 text-sm mb-2">Alert Price (₹/Quintal)</label>
-                        <input type="number" placeholder="Enter target price" value="2200" min="1000" 
-                               class="w-full bg-[#1a2e1d] px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] transition-all">
-                    </div>
-                    
-                    <button class="w-full py-3 bg-[#4caf50] hover:bg-[#3d9a3d] text-white font-medium rounded-lg transition-all">
-                        <i class="fas fa-bell mr-2"></i> Set Alert
-                    </button>
-                    
-                    <div class="mt-5">
-                        <h4 class="text-white text-sm font-medium mb-3">Your Active Alerts</h4>
-                        <div class="space-y-3">
-                            <div class="p-3 bg-[#1a2e1d] rounded-lg flex justify-between items-center">
-                                <div>
-                                    <p class="text-white">Rice: ₹2,500/quintal</p>
-                                    <p class="text-gray-400 text-xs">Set on May 15, 2023</p>
-                                </div>
-                                <button class="text-red-400 hover:text-red-500">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                            <div class="p-3 bg-[#1a2e1d] rounded-lg flex justify-between items-center">
-                                <div>
-                                    <p class="text-white">Maize: ₹1,850/quintal</p>
-                                    <p class="text-gray-400 text-xs">Set on May 10, 2023</p>
-                                </div>
-                                <button class="text-red-400 hover:text-red-500">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-[#1a2e1d] p-4 rounded-lg h-80">
+                    <canvas id="priceChart"></canvas>
                 </div>
+            </div>
 
-                <!-- Market News -->
-                <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
-                    <h3 class="text-xl font-bold text-white mb-4">Market News</h3>
-                    <div class="space-y-4">
-                        <div class="p-3 bg-[#1a2e1d] rounded-lg">
-                            <p class="text-white font-medium">Government increases wheat MSP by 5%</p>
-                            <p class="text-gray-400 text-sm mt-1">The increase will benefit farmers in the upcoming season.</p>
-                            <p class="text-gray-500 text-xs mt-2">May 20, 2023</p>
-                        </div>
-                        <div class="p-3 bg-[#1a2e1d] rounded-lg">
-                            <p class="text-white font-medium">Export demand for wheat rises</p>
-                            <p class="text-gray-400 text-sm mt-1">International markets showing increased interest in Indian wheat.</p>
-                            <p class="text-gray-500 text-xs mt-2">May 18, 2023</p>
-                        </div>
-                        <div class="p-3 bg-[#1a2e1d] rounded-lg">
-                            <p class="text-white font-medium">Khanna Mandi sets record price</p>
-                            <p class="text-gray-400 text-sm mt-1">Local traders offering premium rates for quality wheat.</p>
-                            <p class="text-gray-500 text-xs mt-2">May 15, 2023</p>
-                        </div>
-                    </div>
-                    <a href="#" class="block text-center text-[#4caf50] mt-4 hover:underline">View All News</a>
+            <!-- Price Table -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-2xl font-bold text-white mb-6">Current Market Prices</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-full" id="price-table">
+                        <thead class="bg-[#1a2e1d]">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">Market</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">Location</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">Price (₹/Quintal)</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#2d3d2f]">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full bg-[#1a211d] text-gray-300 pt-12 pb-8 mt-12 relative">
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/50 via-purple-400 to-purple-500/50"></div>
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <div class="logo text-[#4caf50] text-3xl font-devanagari mb-4">Kisaan Saathi 🌾</div>
-                <p class="text-gray-400 max-w-md mx-auto">
-                    Supporting farmers across India with sustainable solutions and resources.
-                </p>
-                <div class="flex justify-center space-x-6 mt-6">
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-[#4d564f] text-center text-sm">
-                © 2025 Kisaan Saathi. All rights reserved.
-            </div>
+    <!-- Simple Footer -->
+    <footer class="bg-[#1a211d] text-gray-300 py-6 mt-8">
+        <div class="container mx-auto text-center">
+            <p>© 2025 Kisaan Saathi. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Price chart
-            const ctx = document.getElementById('priceChart').getContext('2d');
-            const priceChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Apr 22', 'Apr 29', 'May 6', 'May 13', 'May 20'],
-                    datasets: [
-                        {
-                            label: 'Local Market Price',
-                            data: [2050, 2070, 2100, 2120, 2150],
-                            borderColor: '#4caf50',
-                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'MSP',
-                            data: [2015, 2015, 2015, 2015, 2015],
-                            borderColor: 'rgba(59, 130, 246, 0.8)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderDash: [5, 5],
-                            tension: 0.1,
-                            fill: false
-                        },
-                        {
-                            label: 'National Average',
-                            data: [2010, 2025, 2040, 2060, 2080],
-                            borderColor: 'rgba(168, 85, 247, 0.8)',
-                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
-                            tension: 0.3,
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: '#1a2e1d',
-                            titleColor: '#ffffff',
-                            bodyColor: '#e2e8f0',
-                            borderColor: '#4caf50',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ₹' + context.parsed.y;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.05)',
-                            },
-                            ticks: {
-                                color: '#9ca3af'
-                            }
-                        },
-                        y: {
-                            beginAtZero: false,
-                            min: 1950,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.05)',
-                            },
-                            ticks: {
-                                color: '#9ca3af',
-                                callback: function(value) {
-                                    return '₹' + value;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Filter change handlers
-            document.getElementById('crop-select').addEventListener('change', updateData);
-            document.getElementById('state-select').addEventListener('change', updateData);
-            document.getElementById('time-select').addEventListener('change', updateData);
-
-            function updateData() {
-                // In a real app, this would fetch data from an API
-                // For this example, we'll just simulate a data update
-                
-                const crop = document.getElementById('crop-select').value;
-                const state = document.getElementById('state-select').value;
-                const time = document.getElementById('time-select').value;
-                
-                // Show loading state
-                document.getElementById('priceChart').style.opacity = 0.5;
-                
-                // Simulate API call with timeout
-                setTimeout(() => {
-                    // Update chart title
-                    document.querySelector('h2').textContent = crop.charAt(0).toUpperCase() + crop.slice(1) + ' Price Trend';
-                    
-                    // Generate some random data based on selections
-                    const localMarketData = [];
-                    const nationalAvgData = [];
-                    let mspValue = 0;
-                    
-                    switch(crop) {
-                        case 'rice':
-                            mspValue = 1940;
-                            break;
-                        case 'wheat':
-                            mspValue = 2015;
-                            break;
-                        case 'maize':
-                            mspValue = 1850;
-                            break;
-                        case 'potato':
-                            mspValue = 1100;
-                            break;
-                        default:
-                            mspValue = 2000;
-                    }
-                    
-                    const mspData = Array(5).fill(mspValue);
-                    
-                    // Generate some random data
-                    for (let i = 0; i < 5; i++) {
-                        // Local market price tends to be above MSP
-                        localMarketData.push(mspValue + Math.floor(Math.random() * 200));
-                        // National average tends to be slightly lower
-                        nationalAvgData.push(mspValue + Math.floor(Math.random() * 100));
-                    }
-                    
-                    // Sort data to create a trend
-                    localMarketData.sort((a, b) => a - b);
-                    nationalAvgData.sort((a, b) => a - b);
-                    
-                    // Update chart data
-                    priceChart.data.datasets[0].data = localMarketData;
-                    priceChart.data.datasets[1].data = mspData;
-                    priceChart.data.datasets[2].data = nationalAvgData;
-                    
-                    // Update time labels based on selection
-                    let labels = [];
-                    if (time === '1week') {
-                        // Last 7 days
-                        for (let i = 6; i >= 0; i--) {
-                            const date = new Date();
-                            date.setDate(date.getDate() - i);
-                            labels.push(date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'}));
-                        }
-                    } else {
-                        // Default to 1 month (5 weekly points)
-                        labels = ['Apr 22', 'Apr 29', 'May 6', 'May 13', 'May 20'];
-                    }
-                    
-                    priceChart.data.labels = labels;
-                    priceChart.update();
-                    
-                    // Restore chart visibility
-                    document.getElementById('priceChart').style.opacity = 1;
-                }, 500);
-            }
+        // Initialize with your API key
+        document.addEventListener('DOMContentLoaded', () => {
+            // Using the provided API key
+            window.marketPricesUI.setApiKey('579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b');
         });
     </script>
 </body>
 
-</html> 
+</html>
