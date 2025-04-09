@@ -211,6 +211,50 @@ def route_query(state: State) -> str:
         return "handle_Farming_Assistance"
     else:
         return "handle_general"
+    
+workflow = StateGraph(State)
+
+workflow.add_node("categorize", categorize)
+workflow.add_node("analyze_sentiment", analyze_sentiment)
+workflow.add_node("handle_Financial", handle_Financial)
+workflow.add_node("handle_Weather", handle_Weather)
+workflow.add_node("handle_Personal", handle_Personal)
+workflow.add_node("handle_Farming_Assistance", handle_Farming_Assistance)
+workflow.add_node("handle_Education", handle_Education)
+workflow.add_node("handle_Government_Schemes", handle_Government_Schemes)
+workflow.add_node("handle_Plant_Disease", handle_Plant_Disease)
+workflow.add_node("handle_general", handle_general)
+workflow.add_node("escalate", escalate)
+
+workflow.add_edge("categorize", "analyze_sentiment")
+workflow.add_conditional_edges(
+    "analyze_sentiment",
+    route_query,{
+        "handle_Financial" : "handle_Financial",
+        "handle_Weather" :  "handle_Weather",
+        "handle_Personal" : "handle_Personal",
+        "handle_Farming_Assistance": "handle_Farming_Assistance",
+        "handle_Education": "handle_Education",
+        "handle_Government_Schemes": "handle_Government_Schemes",
+        "handle_Plant_Disease": "handle_Plant_Disease",
+        "handle_general" : "handle_general",
+        "escalate": "escalate"
+    }
+)
+
+workflow.add_edge("handle_Financial", END)
+workflow.add_edge("handle_Weather", END)
+workflow.add_edge("handle_Personal", END)
+workflow.add_edge("handle_Farming_Assistance", END)
+workflow.add_edge("handle_Education", END)
+workflow.add_edge("handle_Government_Schemes", END)
+workflow.add_edge("handle_Plant_Disease", END)
+workflow.add_edge("handle_general", END)
+workflow.add_edge("escalate", END)
+
+workflow.set_entry_point("categorize")
+
+app  = workflow.compile()
 
 def main():
   print("Initializing LLM...")
@@ -312,51 +356,6 @@ def main():
       except Exception as e:
           print(f"\nError during graph execution: {e}")
           # Optionally, decide how to handle history on error (e.g., revert?)
-
-workflow = StateGraph(State)
-
-workflow.add_node("categorize", categorize)
-workflow.add_node("analyze_sentiment", analyze_sentiment)
-workflow.add_node("handle_Financial", handle_Financial)
-workflow.add_node("handle_Weather", handle_Weather)
-workflow.add_node("handle_Personal", handle_Personal)
-workflow.add_node("handle_Farming_Assistance", handle_Farming_Assistance)
-workflow.add_node("handle_Education", handle_Education)
-workflow.add_node("handle_Government_Schemes", handle_Government_Schemes)
-workflow.add_node("handle_Plant_Disease", handle_Plant_Disease)
-workflow.add_node("handle_general", handle_general)
-workflow.add_node("escalate", escalate)
-
-workflow.add_edge("categorize", "analyze_sentiment")
-workflow.add_conditional_edges(
-    "analyze_sentiment",
-    route_query,{
-        "handle_Financial" : "handle_Financial",
-        "handle_Weather" :  "handle_Weather",
-        "handle_Personal" : "handle_Personal",
-        "handle_Farming_Assistance": "handle_Farming_Assistance",
-        "handle_Education": "handle_Education",
-        "handle_Government_Schemes": "handle_Government_Schemes",
-        "handle_Plant_Disease": "handle_Plant_Disease",
-        "handle_general" : "handle_general",
-        "escalate": "escalate"
-    }
-)
-
-workflow.add_edge("handle_Financial", END)
-workflow.add_edge("handle_Weather", END)
-workflow.add_edge("handle_Personal", END)
-workflow.add_edge("handle_Farming_Assistance", END)
-workflow.add_edge("handle_Education", END)
-workflow.add_edge("handle_Government_Schemes", END)
-workflow.add_edge("handle_Plant_Disease", END)
-workflow.add_edge("handle_general", END)
-workflow.add_edge("escalate", END)
-
-workflow.set_entry_point("categorize")
-
-app  = workflow.compile()
-
 if __name__ == "__main__":
   main()
 
