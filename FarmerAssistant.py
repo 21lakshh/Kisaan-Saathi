@@ -17,8 +17,7 @@ import requests
 working_dir = os.getcwd()
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-# GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-GROQ_API_KEY = "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"
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ API KEY is not set in the .env file")
