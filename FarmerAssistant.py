@@ -171,6 +171,7 @@ def route_query(state: State) -> str:
     # Get category and sentiment, converting to lowercase for case-insensitive matching
     category = state.get("category", "").lower()
     sentiment = state.get("sentiment", "").lower()
+    query = state.get("query", "").lower()
 
     # First check for negative sentiment
     if sentiment == "negative":
@@ -183,14 +184,29 @@ def route_query(state: State) -> str:
         return "handle_Weather"
     elif "personal" in category:
         return "handle_Personal"
-    elif "farming" in category or "agriculture" in category:
-        return "handle_Farming_Assistance"
     elif "education" in category:
         return "handle_Education"
     elif "government" in category or "scheme" in category:
         return "handle_Government_Schemes"
+    
+    # Check for farming assistance vs plant disease detection
+    elif "farming" in category or "agriculture" in category:
+        # If query contains disease-related keywords but is about protection/prevention/management
+        if any(word in query for word in ["disease", "pest", "infection", "sick", "illness"]):
+            if any(word in query for word in ["how to", "prevent", "protect", "manage", "control", "treat", "solution", "remedy"]):
+                return "handle_Farming_Assistance"
+            # If query is specifically about disease detection/verification
+            elif any(word in query for word in ["check", "verify", "detect", "identify", "diagnose", "test"]):
+                return "handle_Plant_Disease"
+            else:
+                return "handle_Farming_Assistance"
+        return "handle_Farming_Assistance"
+    
+    # Only route to Plant Disease if it's specifically about disease detection/verification
     elif "plant" in category or "disease" in category or "crop" in category:
-        return "handle_Plant_Disease"
+        if any(word in query for word in ["check", "verify", "detect", "identify", "diagnose", "test"]):
+            return "handle_Plant_Disease"
+        return "handle_Farming_Assistance"
     else:
         return "handle_general"
 
