@@ -13,6 +13,9 @@ from langchain.prompts import PromptTemplate # Structures input to ensure the mo
 from langchain.text_splitter import RecursiveCharacterTextSplitter # Splits large text documents into smaller chunks for more efficiency
 import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 working_dir = os.getcwd()
 
