@@ -76,7 +76,6 @@ def setup_qa_chain(vector_db, llm):
   # persist_directory specifies the directory where the vector database will be stored on disk. This allows you to save and reload the vector embeddings instead of recomputing them every time.
 
 def categorize(state: State) -> State:
-  "Technical, Billing, General"
   prompt = ChatPromptTemplate.from_template(
       "Categorize the following Farmer query into one of these categories: "
       "Financial, Personal, Farming Assistance, Education, Government Schemes, Plant Disease. Query: {query}"
@@ -114,20 +113,17 @@ def handle_Personal(state: State) -> State:
     response = "Error: Default response if QA chain fails."
     try:
         if 'qa_chain' not in globals():
-             print("Error: QA Chain (qa_chain) not found in global scope.")
-             response = "Error: QA Chain for personal queries not initialized."
+            print("Error: QA Chain (qa_chain) not found in global scope.")
+            response = "Error: QA Chain for personal queries not initialized."
         else:
             global qa_chain
             result = qa_chain.invoke({"query": state["query"]})
             response = result.get("result", "I'm sorry, I couldn't find relevant information in my documents for your query.")
-
     except Exception as e:
         print(f"Error during RAG query for Personal category: {e}")
         response = f"An error occurred while processing your personal query: {e}"
-
     new_history = state["chat_history"] + [HumanMessage(content=state["query"]), AIMessage(content=response)]
     return {**state, "response": response, "chat_history": new_history}
-
 
 def handle_Farming_Assistance(state: State) -> State:
     prompt = ChatPromptTemplate.from_messages([
@@ -140,16 +136,16 @@ def handle_Farming_Assistance(state: State) -> State:
     new_history = state["chat_history"] + [HumanMessage(content=state["query"]), AIMessage(content=response)]
     return {**state, "response": response or "I'm sorry, I couldn't provide farming assistance.", "chat_history": new_history}
 
-def handle_general(state: State)->State:
-  prompt = ChatPromptTemplate.from_messages([
-      ("system", "Provide a general support response to the following query"),
-      MessagesPlaceholder(variable_name="chat_history"),
-      ("human", "{query}")
-  ])
-  chain = prompt | llm
-  response = chain.invoke({"query": state["query"], "chat_history": state["chat_history"]}).content
-  new_history = state["chat_history"] + [HumanMessage(content=state["query"]), AIMessage(content=response)]
-  return {**state, "response": response or "I'm sorry, I couldn't provide response to your query.", "chat_history": new_history}
+def handle_general(state: State) -> State:
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "Provide a general support response to the following query"),
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("human", "{query}")
+    ])
+    chain = prompt | llm
+    response = chain.invoke({"query": state["query"], "chat_history": state["chat_history"]}).content
+    new_history = state["chat_history"] + [HumanMessage(content=state["query"]), AIMessage(content=response)]
+    return {**state, "response": response or "I'm sorry, I couldn't provide response to your query.", "chat_history": new_history}
 
 def handle_Education(state: State) -> State:
     response = "Please Check the educational related videos provided in our website."
@@ -257,105 +253,109 @@ workflow.set_entry_point("categorize")
 app  = workflow.compile()
 
 def main():
-  print("Initializing LLM...")
+    print("Initializing LLM...")
 
-  # Declare qa_chain as global so handler functions can access it
-  global qa_chain
+    # Declare qa_chain as global so handler functions can access it
+    global qa_chain
 
-  db_path = mental_health_pdf_path # This is the PDF *file* path
-  persist_dir = "./chroma_db" # This is the Chroma *directory*
+    db_path = mental_health_pdf_path # This is the PDF *file* path
+    persist_dir = "./chroma_db" # This is the Chroma *directory*
 
-  # --- Database Loading/Creation Logic ---
-  # Consider unifying the path logic. Currently uses db_path for checking
-  # but create_vector_db uses '/content/data/' and persists to './chroma_db'.
-  # The loading logic uses db_path as persist_directory which is incorrect.
+    # --- Database Loading/Creation Logic ---
+    # Consider unifying the path logic. Currently uses db_path for checking
+    # but create_vector_db uses '/content/data/' and persists to './chroma_db'.
+    # The loading logic uses db_path as persist_directory which is incorrect.
 
-  vector_db = None # Initialize vector_db
-  embeddings = HuggingFaceBgeEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    vector_db = None # Initialize vector_db
+    embeddings = HuggingFaceBgeEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-  # Correctly check if the PERSIST DIRECTORY exists
-  if os.path.exists(persist_dir) and os.path.isdir(persist_dir):
-      print(f"Loading existing vector DB from {persist_dir}")
-      try:
-          vector_db = Chroma(persist_directory=persist_dir, embedding_function=embeddings)
-          print("Vector DB loaded successfully.")
-      except Exception as e:
-          print(f"Error loading vector DB from {persist_dir}: {e}")
-          print("Will attempt to recreate the database.")
-          vector_db = None # Reset on loading error
-  else:
-      print(f"Persistence directory '{persist_dir}' not found.")
+    # Correctly check if the PERSIST DIRECTORY exists
+    if os.path.exists(persist_dir) and os.path.isdir(persist_dir):
+        print(f"Loading existing vector DB from {persist_dir}")
+        try:
+            vector_db = Chroma(persist_directory=persist_dir, embedding_function=embeddings)
+            print("Vector DB loaded successfully.")
+        except Exception as e:
+            print(f"Error loading vector DB from {persist_dir}: {e}")
+            print("Will attempt to recreate the database.")
+            vector_db = None # Reset on loading error
+    else:
+        print(f"Persistence directory '{persist_dir}' not found.")
 
-  # If DB loading failed or directory didn't exist, try to create it
-  if vector_db is None:
-      print("Attempting to create vector database...")
-      # Make sure the source directory for create_vector_db is correct
-      # Currently hardcoded to '/content/data/' inside create_vector_db
-      # It should likely use the directory containing mental_health_pdf_path
-      pdf_directory = os.path.dirname(mental_health_pdf_path)
-      print(f"Using PDF directory: {pdf_directory}") # For debugging
-      try:
-          # Modify create_vector_db to accept paths if possible
-          # For now, assuming it uses the correct path or '/content/data/' is intended
-          loader = DirectoryLoader(pdf_directory, glob='*.pdf', loader_cls=PyPDFLoader) # Load from correct dir
-          documents = loader.load()
-          if not documents:
-              raise ValueError(f"No PDF documents found in {pdf_directory}")
-          text_splitter = RecursiveCharacterTextSplitter(chunk_size= 500, chunk_overlap = 50)
-          texts = text_splitter.split_documents(documents)
-          vector_db = Chroma.from_documents(texts, embeddings, persist_directory=persist_dir)
-          vector_db.persist()
-          print(f"Chroma DB created and data saved to {persist_dir}")
-      except Exception as e:
-          print(f"Error creating vector database: {e}")
-          print("Failed to initialize vector database. Personal queries may not work.")
-          # Handle the error appropriately - maybe exit or disable personal queries
+    # If DB loading failed or directory didn't exist, try to create it
+    if vector_db is None:
+        print("Attempting to create vector database...")
+        # Make sure the source directory for create_vector_db is correct
+        # Currently hardcoded to '/content/data/' inside create_vector_db
+        # It should likely use the directory containing mental_health_pdf_path
+        pdf_directory = os.path.dirname(mental_health_pdf_path)
+        print(f"Using PDF directory: {pdf_directory}") # For debugging
+        try:
+            # Modify create_vector_db to accept paths if possible
+            # For now, assuming it uses the correct path or '/content/data/' is intended
+            loader = DirectoryLoader(pdf_directory, glob='*.pdf', loader_cls=PyPDFLoader) # Load from correct dir
+            documents = loader.load()
+            if not documents:
+                raise ValueError(f"No PDF documents found in {pdf_directory}")
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size= 500, chunk_overlap = 50)
+            texts = text_splitter.split_documents(documents)
+            vector_db = Chroma.from_documents(texts, embeddings, persist_directory=persist_dir)
+            vector_db.persist()
+            print(f"Chroma DB created and data saved to {persist_dir}")
+        except Exception as e:
+            print(f"Error creating vector database: {e}")
+            print("Failed to initialize vector database. Personal queries may not work.")
+            # Handle the error appropriately - maybe exit or disable personal queries
 
 
-  # --- QA Chain Setup ---
-  if vector_db:
-      print("Setting up QA chain...")
-      try:
-          qa_chain = setup_qa_chain(vector_db, llm)
-          print("QA chain setup complete.")
-      except Exception as e:
-          print(f"Error setting up QA chain: {e}")
-          qa_chain = None # Ensure qa_chain is None if setup fails
-  else:
-      print("QA chain setup skipped as vector_db initialization failed.")
-      qa_chain = None
+    # --- QA Chain Setup ---
+    if vector_db:
+        print("Setting up QA chain...")
+        try:
+            qa_chain = setup_qa_chain(vector_db, llm)
+            print("QA chain setup complete.")
+        except Exception as e:
+            print(f"Error setting up QA chain: {e}")
+            qa_chain = None # Ensure qa_chain is None if setup fails
+    else:
+        print("QA chain setup skipped as vector_db initialization failed.")
+        qa_chain = None
 
-  # --- Chat Loop ---
-  # Initialize chat history
-  chat_history = []
+    # --- Chat Loop ---
+    # Initialize chat history
+    chat_history = []
 
-  print("\n--- Chatbot Ready (Type 'exit' to quit) ---")
-  while True:
-      query = input("\nHuman: ").strip()
-      if query.lower() == "exit":
-          print("Exiting the chatbot.")
-          break
-      if not query:
-          continue
+    # Only start the chat loop if this file is run directly
+    if __name__ == "__main__":
+        print("\n--- Chatbot Ready (Type 'exit' to quit) ---")
+        while True:
+            query = input("\nHuman: ").strip()
+            if query.lower() == "exit":
+                print("Exiting the chatbot.")
+                break
+            if not query:
+                continue
 
-      # Prepare the input state for the graph
-      current_state = {
-          "query": query,
-          "chat_history": chat_history
-          # Other state keys like category, sentiment, response will be populated by the graph
-      }
+            # Prepare the input state for the graph
+            current_state = {
+                "query": query,
+                "chat_history": chat_history
+                # Other state keys like category, sentiment, response will be populated by the graph
+            }
 
-      # Invoke the graph
-      try:
-          # Use .stream for intermediate steps or .invoke for final result
-          final_state = app.invoke(current_state)
-          answer = final_state.get("response", "Sorry, I encountered an issue processing your query.")
-          print(f"\nChatbot: {answer}")
-          # Update the history for the next turn using the final state's history
-          chat_history = final_state.get("chat_history", chat_history) # Update history from graph output
-      except Exception as e:
-          print(f"\nError during graph execution: {e}")
-          # Optionally, decide how to handle history on error (e.g., revert?)
+            # Invoke the graph
+            try:
+                # Use .stream for intermediate steps or .invoke for final result
+                final_state = app.invoke(current_state)
+                answer = final_state.get("response", "Sorry, I encountered an issue processing your query.")
+                print(f"\nChatbot: {answer}")
+                # Update the history for the next turn using the final state's history
+                chat_history = final_state.get("chat_history", chat_history) # Update history from graph output
+            except Exception as e:
+                print(f"\nError during graph execution: {e}")
+                # Optionally, decide how to handle history on error (e.g., revert?)
+                
+# Move this condition check outside the main function
 if __name__ == "__main__":
-  main()
+    main()
 

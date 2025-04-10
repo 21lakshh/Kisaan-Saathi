@@ -13,6 +13,8 @@ from prediction import model_response
 import pandas as pd
 import google.generativeai as genai
 from pydantic import BaseModel
+from FarmerAssistant import app as farmer_assistant_app, main as init_farmer_assistant
+from langchain_core.messages import HumanMessage, AIMessage
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -43,6 +45,9 @@ model = genai.GenerativeModel('gemini-2.0-flash')
 
 if not GROQ_API_KEY:
     raise ValueError("GROQ API KEY is not set in the .env file")
+
+# Initialize Farmer Assistant
+init_farmer_assistant()
 
 @app.get("/", response_class = HTMLResponse)
 async def read_root(request: Request):
@@ -193,5 +198,68 @@ async def chat(request: Request):
         logger.error(f"Error in chat: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-import uvicorn
-uvicorn.run(app, port=8000)
+@app.post("/api/farmer-chat")
+async def farmer_chat(request: Request):
+    try:
+        # Get the request data
+        body = await request.json()
+        question = body.get('question', '')
+        chat_history = body.get('chat_history', [])  # Expect array of strings
+        
+        if not question:
+            raise HTTPException(status_code=400, detail="Question is required")
+
+        # Convert string history to LangChain messages
+        lc_history = []
+        try:
+            for i in range(0, len(chat_history), 2):
+                if i+1 < len(chat_history):
+                    lc_history.append(HumanMessage(content=chat_history[i]))
+                    lc_history.append(AIMessage(content=chat_history[i+1]))
+        except Exception as e:
+            logger.error(f"Error converting chat history: {str(e)}")
+            # If there's an error with history, start fresh
+            lc_history = []
+
+        # Process through LangChain
+        try:
+            current_state = {
+                "query": question,
+                "chat_history": lc_history
+            }
+            final_state = farmer_assistant_app.invoke(current_state)
+
+            # Convert LangChain messages back to strings
+            serialized_history = []
+            for msg in final_state["chat_history"]:
+                if isinstance(msg, (HumanMessage, AIMessage)):
+                    serialized_history.append(msg.content)
+            print(final_state["response"])
+            return JSONResponse(content={
+                "response": final_state["response"],
+                "chat_history": serialized_history
+            })
+        
+        except Exception as e:
+            logger.error(f"Error in LangChain processing: {str(e)}")
+            # Return a basic response if LangChain processing fails
+            return JSONResponse(content={
+                "response": "I apologize, but I'm having trouble processing your request right now. Please try again later.",
+                "chat_history": chat_history  # Keep existing history
+            })
+        
+    except Exception as e:
+        logger.error(f"Error in farmer chat: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Chat processing error: {str(e)}"}
+        )
+
+# Remove or comment out the direct uvicorn run
+# import uvicorn
+# uvicorn.run(app, port=8000)
+
+# Replace with this:
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)

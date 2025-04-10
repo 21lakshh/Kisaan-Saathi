@@ -16,154 +16,104 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-[#1e3a23]">
-    <!-- Simple Header -->
-    <header class="bg-[#1e3a23] p-4 flex justify-between items-center">
-        <div class="text-[#4caf50] text-3xl font-bold">Kisaan Saathi 🌾</div>
-        <a href="/dashboard.html" class="text-white hover:text-[#4caf50] text-lg flex items-center">
-            <i class="fas fa-chart-line mr-2"></i>
-            Go to Dashboard
-        </a>
+<body class="bg-[#1e3a23] min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-[#162619] p-6 border-b border-[#2d3d2f]/40">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="text-[#4caf50] text-3xl font-bold">Kisaan Saathi 🌾</div>
+                <span class="px-3 py-1 bg-[#4caf50]/20 rounded-full text-[#4caf50] text-sm">AI Assistant</span>
+            </div>
+            <a href="/dashboard.html" class="bg-[#1a2e1d] hover:bg-[#223423] text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
     </header>
 
-    <div class="container mx-auto py-6 px-4">
-        <!-- Simple Title -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-white mb-2">Farmer Assistant</h1>
-            <p class="text-gray-300">Ask me anything about farming</p>
-        </div>
-
-        <!-- Main Chat Area -->
-        <div class="max-w-3xl mx-auto">
-            <!-- Chat Window -->
-            <div class="bg-[#162619] rounded-xl border border-[#2d3d2f]/40 h-[500px] flex flex-col">
-                <!-- Chat Messages -->
-                <div class="flex-1 p-4 overflow-y-auto space-y-4" id="chat-messages">
-                    <!-- Welcome Message -->
-                    <div class="flex items-start">
-                        <div class="w-8 h-8 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-2 mt-1">
-                            <i class="fas fa-robot"></i>
+    <!-- Main Content -->
+    <main class="flex-1 py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex gap-6">
+                <!-- Main Chat Section -->
+                <div class="flex-1">
+                    <div class="bg-[#162619] rounded-2xl border border-[#2d3d2f]/40 shadow-xl overflow-hidden">
+                        <!-- Chat Header -->
+                        <div class="p-6 border-b border-[#2d3d2f]/40 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-[#4caf50]/20 flex items-center justify-center">
+                                <i class="fas fa-robot text-[#4caf50] text-2xl"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-white text-xl font-bold">Farming Assistant</h2>
+                                <p class="text-gray-400">Ask me anything about farming</p>
+                            </div>
                         </div>
-                        <div class="bg-[#1a2e1d] rounded-lg rounded-tl-none p-3 max-w-[80%]">
-                            <p class="text-white">Namaste! I'm your farming assistant. How can I help you today?</p>
+
+                        <!-- Chat Messages -->
+                        <div class="h-[600px] overflow-y-auto p-6 space-y-6" id="chat-messages">
+                            <!-- Welcome Message -->
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50]">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="bg-[#1a2e1d] rounded-2xl rounded-tl-none p-4 max-w-[80%] shadow-lg">
+                                    <p class="text-white">Namaste! I'm your farming assistant. How can I help you today?</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="p-6 border-t border-[#2d3d2f]/40 bg-[#162619]">
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1 bg-[#1a2e1d] rounded-xl px-4 py-3 focus-within:ring-2 focus-within:ring-[#4caf50]/50">
+                                    <input type="text" id="message-input" 
+                                        placeholder="Type your question here..." 
+                                        class="w-full bg-transparent text-white placeholder-gray-400 focus:outline-none">
+                                </div>
+                                <button id="send-button" 
+                                    class="bg-[#4caf50] hover:bg-[#3d9140] text-white rounded-xl px-6 py-3 flex items-center gap-2 transition-all">
+                                    <span>Send</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Chat Input -->
-                <div class="p-4 border-t border-[#2d3d2f]">
-                    <div class="flex items-center bg-[#1a2e1d] rounded-lg px-3 py-2">
-                        <input type="text" id="message-input" placeholder="Type your question here..." 
-                               class="flex-1 bg-transparent text-white focus:outline-none px-3 py-2">
-                        <button id="send-button" class="bg-[#4caf50] hover:bg-[#3d9140] text-white rounded-lg w-10 h-10 flex items-center justify-center">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+
+                <!-- Quick Help Sidebar -->
+                <div class="w-80">
+                    <div class="bg-[#162619] rounded-2xl p-6 sticky top-8">
+                        <div class="flex items-center gap-3 mb-6">
+                            <i class="fas fa-lightbulb text-[#4caf50] text-2xl"></i>
+                            <h3 class="text-white font-bold text-lg">Quick Questions</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <button class="quick-question w-full text-left p-4 bg-[#1a2e1d] rounded-xl text-gray-300 hover:bg-[#223423] hover:text-[#4caf50] transition-all">
+                                How to protect crops from diseases?
+                            </button>
+                            <button class="quick-question w-full text-left p-4 bg-[#1a2e1d] rounded-xl text-gray-300 hover:bg-[#223423] hover:text-[#4caf50] transition-all">
+                                Best time to sow wheat?
+                            </button>
+                            <button class="quick-question w-full text-left p-4 bg-[#1a2e1d] rounded-xl text-gray-300 hover:bg-[#223423] hover:text-[#4caf50] transition-all">
+                                How to improve soil health?
+                            </button>
+                            <button class="quick-question w-full text-left p-4 bg-[#1a2e1d] rounded-xl text-gray-300 hover:bg-[#223423] hover:text-[#4caf50] transition-all">
+                                Government schemes for farmers?
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Quick Help Section -->
-            <div class="mt-6 grid grid-cols-2 gap-4">
-                <div class="bg-[#162619] rounded-xl p-4 text-center">
-                    <i class="fas fa-question-circle text-[#4caf50] text-2xl mb-2"></i>
-                    <h3 class="text-white font-bold mb-2">Common Questions</h3>
-                    <div class="space-y-2">
-                        <button class="text-gray-300 hover:text-[#4caf50] text-sm block w-full text-left">
-                            How to protect crops from diseases?
-                        </button>
-                        <button class="text-gray-300 hover:text-[#4caf50] text-sm block w-full text-left">
-                            Best time to sow wheat?
-                        </button>
-                        <button class="text-gray-300 hover:text-[#4caf50] text-sm block w-full text-left">
-                            How to improve soil health?
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="bg-[#162619] rounded-xl p-4 text-center">
-                    <i class="fas fa-language text-[#4caf50] text-2xl mb-2"></i>
-                    <h3 class="text-white font-bold mb-2">Language</h3>
-                    <select class="bg-[#1a2e1d] text-white px-3 py-2 rounded-lg w-full">
-                        <option value="en">English</option>
-                        <option value="hi">हिंदी</option>
-                        <option value="pa">ਪੰਜਾਬੀ</option>
-                        <option value="te">తెలుగు</option>
-                        <option value="ta">தமிழ்</option>
-                    </select>
-                </div>
-            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Simple Footer -->
-    <footer class="bg-[#1a211d] text-gray-300 py-6 mt-8">
-        <div class="container mx-auto text-center">
-            <p>© 2023 Kisaan Saathi. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-[#162619] text-gray-300 py-6 border-t border-[#2d3d2f]/40">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>© 2025 Kisaan Saathi. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const messageInput = document.getElementById('message-input');
-            const sendButton = document.getElementById('send-button');
-            const chatMessages = document.getElementById('chat-messages');
-            
-            function sendMessage() {
-                const message = messageInput.value.trim();
-                if (!message) return;
-                
-                // Add user message
-                const userMessage = `
-                    <div class="flex items-start justify-end">
-                        <div class="bg-[#4caf50]/20 rounded-lg rounded-tr-none p-3 max-w-[80%]">
-                            <p class="text-white">${message}</p>
-                        </div>
-                        <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 ml-2 mt-1">
-                            <i class="fas fa-user"></i>
-                        </div>
-                    </div>
-                `;
-                chatMessages.insertAdjacentHTML('beforeend', userMessage);
-                
-                // Clear input
-                messageInput.value = '';
-                
-                // Scroll to bottom
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                // Simulate response
-                setTimeout(() => {
-                    const botResponse = `
-                        <div class="flex items-start">
-                            <div class="w-8 h-8 rounded-full bg-[#4caf50]/20 flex items-center justify-center text-[#4caf50] mr-2 mt-1">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="bg-[#1a2e1d] rounded-lg rounded-tl-none p-3 max-w-[80%]">
-                                <p class="text-white">I understand your question. Let me help you with that.</p>
-                            </div>
-                        </div>
-                    `;
-                    chatMessages.insertAdjacentHTML('beforeend', botResponse);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
-            }
-            
-            // Event listeners
-            sendButton.addEventListener('click', sendMessage);
-            messageInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
-            
-            // Quick help buttons
-            document.querySelectorAll('button.text-gray-300').forEach(button => {
-                button.addEventListener('click', function() {
-                    messageInput.value = this.textContent.trim();
-                });
-            });
-        });
-    </script>
+    <script src="static/farmer-assistant.js"></script>
 </body>
-
-</html> 
+</html>
