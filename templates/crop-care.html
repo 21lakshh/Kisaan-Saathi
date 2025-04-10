@@ -18,188 +18,135 @@
 </head>
 
 <body class="bg-[#1e3a23]">
-    <header class="header bg-[#1e3a23] p-4 flex justify-between items-center border-b border-[#4caf50]/20">
-        <div class="logo text-[#4caf50] text-4xl font-devanagari">Kisaan Saathi 🌾</div>
-        <nav class="nav-links flex space-x-6 text-lg">
-            <a href="/" class="text-white hover:text-[#4caf50]">Home</a>
-            <a href="/dashboard.html" class="text-white hover:text-[#4caf50]">Dashboard</a>
-            <a href="/static/marketplace.html" class="text-white hover:text-[#4caf50]">Marketplace</a>
-            <a href="/donation.html" class="text-white hover:text-[#4caf50]">Donate</a>
-        </nav>
-    </header>
 
     <div class="container mx-auto py-8 px-4">
-        <!-- Breadcrumb Navigation -->
-        <div class="flex items-center gap-2 text-gray-400 text-sm mb-8">
-            <a href="/" class="hover:text-[#4caf50]">Home</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <a href="/dashboard.html" class="hover:text-[#4caf50]">Dashboard</a>
-            <i class="fas fa-chevron-right text-xs"></i>
-            <span class="text-[#4caf50]">Crop Care</span>
+        <!-- Dashboard Button -->
+        <div class="mb-6">
+            <a href="/dashboard.html" class="inline-flex items-center gap-2 px-4 py-2 bg-[#4caf50] hover:bg-[#2e7d32] text-white rounded-lg transition-colors">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
         </div>
-     <!-- Report Section -->
-     <div class="w-full bg-[#1e3a23] py-16" id="report">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">🌾 Crop Disease Detection</h2>
 
-            <!-- Main Report Container -->
-            <div
-                class="bg-[#2a5a31]/50 backdrop-blur-md rounded-xl shadow-lg border border-[#4caf50]/20 overflow-hidden">
-                <!-- Input Section -->
-                <div class="p-6 space-y-6">
-                    <!-- Location Input -->
-                    <div class="flex gap-3">
-                        <div class="flex-1">
-                            <label class="block text-gray-300 text-sm font-medium mb-2">Location</label>
-                            <div class="relative">
-                                <input id="location-input" type="text"
-                                    placeholder="Enter location or use current location"
-                                    class="w-full p-4 bg-[#1e3a23] rounded-xl border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-300"
-                                    readonly />
-                                <button type="button" onclick="toggleLocationInput()"
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4caf50] hover:text-purple-300"
-                                    title="Toggle manual input">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                            <!-- Add a hidden input for coordinates -->
-                            <input type="hidden" id="coordinates-input">
-                            <!-- Location status message -->
-                            <p id="location-status" class="text-sm text-[#4caf50] mt-2"></p>
-                            <!-- Manual input instructions -->
-                            <div id="manual-input-instructions"
-                                class="hidden mt-2 text-sm text-gray-300 bg-[#1e3a23] p-3 rounded-lg">
-                                <p class="font-medium mb-2">Tips for better location accuracy:</p>
-                                <ul class="list-disc list-inside space-y-1">
-                                    <li>Enable GPS on your device</li>
-                                    <li>Move to an open area with clear sky view</li>
-                                    <li>Wait a few seconds for GPS to stabilize</li>
-                                    <li>Try refreshing the page and detecting again</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <button type="button" onclick="getLocation()" id="detect-location"
-                            class="px-4 bg-[#4caf50] hover:bg-[#2e7d32] text-white rounded-xl transition-all flex items-center justify-center group"
-                            title="Use current location">
-                            <i id="location-icon" class="fas fa-location-dot text-xl group-hover:animate-pulse"></i>
-                            <i id="location-loader" class="fas fa-circle-notch animate-spin text-xl hidden"></i>
-                        </button>
-                    </div>
+        <!-- Report Section -->
+        <div class="w-full bg-[#1e3a23] py-16" id="report">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">🌾 Crop Disease Detection</h2>
 
-                    <!-- Upload Image Section -->
-                    <div>
-                        <label class="block text-gray-300 text-sm font-medium mb-2">Photos</label>
-                        <div class="flex items-center gap-4">
-                            <button id="upload-btn"
-                                class="flex-1 py-4 px-6 bg-gradient-to-r from-[#4caf50] to-[#2e7d32] hover:from-[#2e7d32] hover:to-[#1b5e20] text-white font-medium rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg">
-                                <i class="fas fa-camera text-xl"></i>
-                                <span>Upload Photo</span>
+                <!-- Main Report Container -->
+                <div
+                    class="bg-[#2a5a31]/50 backdrop-blur-md rounded-xl shadow-lg border border-[#4caf50]/20 overflow-hidden">
+                    <!-- Input Section -->
+                    <div class="p-6 space-y-6">
+                        <!-- Location Input -->
+                        <div class="flex gap-3">
+                            <div class="flex-1">
+                                <label class="block text-gray-300 text-sm font-medium mb-2">Location</label>
+                                <div class="relative">
+                                    <input id="location-input" type="text"
+                                        placeholder="Enter location or use current location"
+                                        class="w-full p-4 bg-[#1e3a23] rounded-xl border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-300"
+                                        readonly />
+                                    <button type="button" onclick="toggleLocationInput()"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4caf50] hover:text-purple-300"
+                                        title="Toggle manual input">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                                <!-- Add a hidden input for coordinates -->
+                                <input type="hidden" id="coordinates-input">
+                                <!-- Location status message -->
+                                <p id="location-status" class="text-sm text-[#4caf50] mt-2"></p>
+                                <!-- Manual input instructions -->
+                                <div id="manual-input-instructions"
+                                    class="hidden mt-2 text-sm text-gray-300 bg-[#1e3a23] p-3 rounded-lg">
+                                    <p class="font-medium mb-2">Tips for better location accuracy:</p>
+                                    <ul class="list-disc list-inside space-y-1">
+                                        <li>Enable GPS on your device</li>
+                                        <li>Move to an open area with clear sky view</li>
+                                        <li>Wait a few seconds for GPS to stabilize</li>
+                                        <li>Try refreshing the page and detecting again</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button type="button" onclick="getLocation()" id="detect-location"
+                                class="px-4 bg-[#4caf50] hover:bg-[#2e7d32] text-white rounded-xl transition-all flex items-center justify-center group"
+                                title="Use current location">
+                                <i id="location-icon" class="fas fa-location-dot text-xl group-hover:animate-pulse"></i>
+                                <i id="location-loader" class="fas fa-circle-notch animate-spin text-xl hidden"></i>
                             </button>
-                            <input type="file" id="image-upload" accept="image/*" class="hidden" />
                         </div>
 
-                        <!-- Single Image Preview -->
-                        <div id="image-container" class="hidden mt-4">
-                            <div
-                                class="relative w-48 h-48 border-2 border-dashed border-[#4caf50]/30 rounded-lg overflow-hidden">
-                                <img id="image-preview" class="w-full h-full object-cover" />
-                                <button id="remove-image"
-                                    class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
-                                    <i class="fas fa-times text-xs w-4 h-4 flex items-center justify-center"></i>
+                        <!-- Upload Image Section -->
+                        <div>
+                            <label class="block text-gray-300 text-sm font-medium mb-2">Photos</label>
+                            <div class="flex items-center gap-4">
+                                <button id="upload-btn"
+                                    class="flex-1 py-4 px-6 bg-gradient-to-r from-[#4caf50] to-[#2e7d32] hover:from-[#2e7d32] hover:to-[#1b5e20] text-white font-medium rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg">
+                                    <i class="fas fa-camera text-xl"></i>
+                                    <span>Upload Photo</span>
                                 </button>
+                                <input type="file" id="image-upload" accept="image/*" class="hidden" />
                             </div>
-                            <p class="text-sm text-gray-400 mt-2">Max 1 photo (2MB max)</p>
-                        </div>
-                    </div>
-                    <!-- Select language -->
-                    <div>
-                        <label for="language-select" class="block text-gray-300 text-sm font-medium mb-2">Select Language</label>
-                        <select id="language-select"
-                            class="w-full p-4 bg-[#1e3a23] rounded-xl border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-300">
-                            <option value="English">English</option>
-                            <option value="हिन्दी">हिन्दी</option>
-                            <option value="ਪੰਜਾਬੀ">ਪੰਜਾਬੀ</option>
-                            <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
-                        </select>
-                    </div>
 
-                    <!-- Submit Button Example -->
-                    <button id="submit-query"
-                        class="w-full py-4 bg-gradient-to-r from-[#4caf50] to-[#2e7d32] hover:from-[#2e7d32] hover:to-[#1b5e20] text-white font-medium rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>Submit Report</span>
-                    </button>
-
-                    <!-- Helper Text -->
-                    <div class="flex items-start gap-3 p-4 bg-purple-400/10 rounded-xl">
-                        <i class="fas fa-info-circle text-[#4caf50] mt-1"></i>
-                        <p class="text-gray-300 text-sm">
-                            Your report helps us locate and rescue stray animals efficiently. We'll contact you for any
-                            additional information needed.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Response Section -->
-                <div id="response-container" class="hidden border-t border-[#4caf50]/20">
-                    <div class="p-6 space-y-4">
-                        <h3 class="text-xl font-semibold text-white flex items-center gap-2">
-                            <i class="fas fa-comment-dots text-[#4caf50]"></i>
-                            Response
-                        </h3>
-                        <div class="bg-[#1e3a23] p-4 rounded-xl text-white">
-                            <!-- AI responses will appear here -->
-                        </div>
-
-                        <!-- Location-specific Information -->
-                        <div id="location-info" class="hidden mt-4">
-                            <div class="bg-[#2a5a31]/50 p-4 rounded-xl border border-[#4caf50]/20">
-                                <div class="flex items-center gap-3 mb-3">
-                                    <i class="fas fa-map-marker-alt text-[#4caf50]"></i>
-                                    <h4 class="text-white font-semibold">Nearby Help</h4>
+                            <!-- Single Image Preview -->
+                            <div id="image-container" class="hidden mt-4">
+                                <div
+                                    class="relative w-48 h-48 border-2 border-dashed border-[#4caf50]/30 rounded-lg overflow-hidden">
+                                    <img id="image-preview" class="w-full h-full object-cover" />
+                                    <button id="remove-image"
+                                        class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
+                                        <i class="fas fa-times text-xs w-4 h-4 flex items-center justify-center"></i>
+                                    </button>
                                 </div>
-                                <div id="shelter-info" class="hidden">
-                                    <p class="text-gray-300 mb-2">Nearest Dog Shelter:</p>
-                                    <div class="bg-[#1e3a23] p-3 rounded-lg">
-                                        <p class="text-white font-medium">Paws & Care Shelter</p>
-                                        <p class="text-gray-400 text-sm">2.5 km away</p>
-                                        <p class="text-gray-400 text-sm">ETA: 15 minutes</p>
-                                    </div>
-                                </div>
-                                <div id="vet-info" class="hidden">
-                                    <p class="text-gray-300 mb-2">Nearest Veterinary Hospital:</p>
-                                    <div class="bg-[#1e3a23] p-3 rounded-lg">
-                                        <p class="text-white font-medium">PetCare Emergency Hospital</p>
-                                        <p class="text-gray-400 text-sm">1.8 km away</p>
-                                        <p class="text-gray-400 text-sm">ETA: 10 minutes</p>
-                                    </div>
-                                </div>
+                                <p class="text-sm text-gray-400 mt-2">Max 1 photo (2MB max)</p>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <!-- Select language -->
+                        <div>
+                            <label for="language-select" class="block text-gray-300 text-sm font-medium mb-2">Select Language</label>
+                            <select id="language-select"
+                                class="w-full p-4 bg-[#1e3a23] rounded-xl border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-300">
+                                <option value="English">English</option>
+                                <option value="हिन्दी">हिन्दी</option>
+                                <option value="ਪੰਜਾਬੀ">ਪੰਜਾਬੀ</option>
+                                <option value="ಕನ್ನಡ">ಕನ್ನಡ</option>
+                            </select>
+                        </div>
 
-                <!-- Error Message -->
-                <div id="error-container" class="hidden">
-                    <div class="p-6 bg-red-500/10 border-t border-red-500/20">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-exclamation-circle text-[#f44336]mt-1"></i>
-                            <p id="error-text" class="text-red-400"></p>
+                        <!-- Submit Button Example -->
+                        <button id="submit-query"
+                            class="w-full py-4 bg-gradient-to-r from-[#4caf50] to-[#2e7d32] hover:from-[#2e7d32] hover:to-[#1b5e20] text-white font-medium rounded-xl transition-all flex items-center justify-center gap-3 shadow-lg">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Submit Report</span>
+                        </button>
+
+                    <!-- Response Section -->
+                    <div id="response-container" class="hidden border-t border-[#4caf50]/20">
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-xl font-semibold text-white flex items-center gap-2">
+                                <i class="fas fa-comment-dots text-[#4caf50]"></i>
+                                Response
+                            </h3>
+                            <div class="bg-[#1e3a23] p-4 rounded-xl text-white">
+                                <!-- AI responses will appear here -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-            <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Hotspot Map Section -->
+        <div class="mt-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">🌾 Disease Hotspot Analysis</h2>
+            <div class="grid lg:grid-cols-2 gap-8">
                 <!-- Map Container -->
-                <div
-                    class="lg:col-span-2 bg-[#2a5a31]/50 rounded-xl shadow-lg overflow-hidden border border-[#4caf50]/20">
+                <div class="bg-[#2a5a31]/50 rounded-xl shadow-lg overflow-hidden border border-[#4caf50]/20">
                     <div class="p-4 bg-[#1e3a23] text-white flex justify-between items-center">
                         <h3 class="font-semibold flex items-center gap-2">
                             <i class="fas fa-map-marker-alt text-[#4caf50]"></i>
-                            Live Hotspot Map
+                            Disease Hotspot Map
                         </h3>
                         <div class="flex items-center gap-4">
                             <span class="text-sm flex items-center gap-2">
@@ -211,76 +158,54 @@
                             </button>
                         </div>
                     </div>
-                    <div class="relative h-[600px]">
-                        <iframe src="/static/hotspot_map.html" class="absolute inset-0 w-full h-full border-none"
-                            allowfullscreen>
+                    <div class="relative h-[500px]">
+                        <iframe src="/static/hotspot_map.html" class="absolute inset-0 w-full h-full border-none" allowfullscreen>
                         </iframe>
                     </div>
                 </div>
 
-                <!-- Stats and Filters Panel -->
-                <div class="space-y-6">
-                    <!-- Quick Stats -->
-                    <div class="bg-[#2a5a31]/50 rounded-xl p-6 border border-[#4caf50]/20">
-                        <h3 class="text-white font-semibold mb-4">Current Statistics</h3>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center p-3 bg-[#1e3a23] rounded-lg">
-                                <span class="text-gray-300">Active Reports</span>
-                                <span class="text-[#4caf50] font-bold">24</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-[#1e3a23] rounded-lg">
-                                <span class="text-gray-300">Teams Deployed</span>
-                                <span class="text-[#4caf50] font-bold">8</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-[#1e3a23] rounded-lg">
-                                <span class="text-gray-300">Response Time</span>
-                                <span class="text-[#4caf50] font-bold">~15 mins</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Filters -->
-                    <div class="bg-[#2a5a31]/50 rounded-xl p-6 border border-[#4caf50]/20">
-                        <h3 class="text-white font-semibold mb-4">Map Filters</h3>
-                        <div class="space-y-3">
-                            <label class="flex items-center gap-2 text-gray-300">
-                                <input type="checkbox" checked class="form-checkbox text-[#4caf50]">
-                                Recent Reports
-                            </label>
-                            <label class="flex items-center gap-2 text-gray-300">
-                                <input type="checkbox" checked class="form-checkbox text-[#4caf50]">
-                                Active Teams
-                            </label>
-                            <label class="flex items-center gap-2 text-gray-300">
-                                <input type="checkbox" checked class="form-checkbox text-[#4caf50]">
-                                High Priority Areas
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="bg-[#2a5a31]/50 rounded-xl p-6 border border-[#4caf50]/20">
-                        <h3 class="text-white font-semibold mb-4">Recent Activity</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start gap-3">
-                                <div class="w-2 h-2 bg-green-400 rounded-full mt-2"></div>
-                                <div>
-                                    <p class="text-gray-300">New report at Koramangala</p>
-                                    <p class="text-gray-400 text-sm">2 minutes ago</p>
+                <!-- Map Description Panel -->
+                <div class="bg-[#2a5a31]/50 rounded-xl p-6 border border-[#4caf50]/20">
+                    <h3 class="text-white font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-[#4caf50]"></i>
+                        About Hotspot Map
+                    </h3>
+                    <div class="space-y-4">
+                        <p class="text-gray-300">
+                            This interactive map helps identify areas with concentrated reports of crop diseases across Rajasthan. The system automatically clusters nearby reports to create hotspots, enabling government agencies to:
+                        </p>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-[#4caf50] mt-1"></i>
+                                <span>Identify areas requiring immediate inspection and intervention</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-[#4caf50] mt-1"></i>
+                                <span>Allocate resources efficiently to affected regions</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-[#4caf50] mt-1"></i>
+                                <span>Monitor disease spread patterns in real-time</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check-circle text-[#4caf50] mt-1"></i>
+                                <span>Coordinate with local agricultural departments</span>
+                            </li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-[#1e3a23] rounded-lg">
+                            <h4 class="text-[#4caf50] font-medium mb-2">Priority Levels</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <span class="text-gray-300 text-sm">High Priority - Immediate action required</span>
                                 </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                                <div>
-                                    <p class="text-gray-300">Team dispatched to Indiranagar</p>
-                                    <p class="text-gray-400 text-sm">5 minutes ago</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                    <span class="text-gray-300 text-sm">Medium Priority - Monitor closely</span>
                                 </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
-                                <div>
-                                    <p class="text-gray-300">Rescue completed in HSR Layout</p>
-                                    <p class="text-gray-400 text-sm">15 minutes ago</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <span class="text-gray-300 text-sm">Low Priority - Standard monitoring</span>
                                 </div>
                             </div>
                         </div>
@@ -288,29 +213,7 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="w-full bg-[#1a211d] text-gray-300 pt-12 pb-8 mt-12 relative">
-        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4caf50]/50 via-purple-400 to-purple-500/50"></div>
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <div class="logo text-[#4caf50] text-3xl font-devanagari mb-4">Kisaan Saathi 🌾</div>
-                <p class="text-gray-400 max-w-md mx-auto">
-                    Supporting farmers across India with sustainable solutions and resources.
-                </p>
-                <div class="flex justify-center space-x-6 mt-6">
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-[#4d564f] text-center text-sm">
-                © 2025 Kisaan Saathi. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    </div>
     <script src="/static/disease_detection_response.js"></script>
 </body>
 
