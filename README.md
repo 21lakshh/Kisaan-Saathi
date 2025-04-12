@@ -70,7 +70,10 @@
 ---
 
 ## 📸 Screenshots  
-*Add screenshots of the dashboard, crop detection page, AI assistant chat, and hotspot maps here.*
+![example1](images/image1.png)
+![example2](images/image2.png)
+![example3](images/image3.png)
+![example4](images/image4.png)
 
 ---
 
