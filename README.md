@@ -74,17 +74,17 @@
 
 ---
 
-## 📌 Installation
-
-```bash
-# Clone the repo
-git clone https://github.com/yourusername/kisaan-saathi.git
-cd kisaan-saathi
-```bash
-# Install backend dependencies
-pip install -r requirements.txt
-
-# Run the FastAPI backend
-uvicorn main:app --reload
-
-# Serve frontend (via live server or integrate with FastAPI templates)
+## 🚀 Installation & Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/21lakshh/Kisaan-Sathi.git   
+   cd Kisaan-Sathi
+   ```
+2. Install dependencies: // NEED TO ADD
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the application:
+   ```bash
+   python app.py
+   ```
