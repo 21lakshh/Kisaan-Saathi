@@ -70,10 +70,10 @@
 ---
 
 ## 📸 Screenshots  
-![example1](images/image1.png)
-![example2](images/image2.png)
-![example3](images/image3.png)
-![example4](images/image4.png)
+![example1](Images/image1.png)
+![example2](Images/image2.png)
+![example3](Images/image3.png)
+![example4](Images/image4.png)
 
 ---
 
