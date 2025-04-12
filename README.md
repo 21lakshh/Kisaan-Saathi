@@ -88,3 +88,9 @@
    ```bash
    python app.py
    ```
+4. Create a **.env** file in the root directory and add your API keys:
+   ```bash
+   GROQ_API_KEY=your_groq_key_here
+   DATA_GOV_API_KEY=your_data_gov_key_here
+   GEMINI_API_KEY=your_gemini_key_here
+   ```
