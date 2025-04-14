@@ -18,6 +18,27 @@
 
 ---
 
+### 💧 Water Footprint Calculator
+- **ML-Powered Water Requirement Prediction** using a **Random Forest Regressor** model
+- Considers multiple factors for accurate water requirement estimation:
+  - Crop type and area
+  - Regional climate conditions
+  - Soil characteristics
+  - Irrigation methods
+  - Environmental factors (rainfall, temperature, humidity)
+- Provides detailed insights:
+  - Total water requirement
+  - Daily and weekly water needs
+  - Customized irrigation recommendations
+  - Soil-specific water management tips
+- Model Features:
+  - Trained on historical agricultural data
+  - Handles both categorical (crop type, soil type) and numerical features
+  - Provides real-time predictions through FastAPI backend
+  - Adapts recommendations based on local conditions
+
+---
+
 ### 🤖 Farmer AI Assistant – Multi-Agent RAG System  
 - Built with a **multi-agent architecture**.  
 - Uses **RAG (Retrieval-Augmented Generation)** with **ChromaDB vector storage** for Mental Health Support.  
