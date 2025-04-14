@@ -105,13 +105,11 @@ def model_response(image_path: str, selected_language: str) -> dict:
         query = f"Given the crop disease: {disease}, please provide a detailed explanation of its causes, prevention methods, and treatment options. Respond in the following language: {selected_language}."
         logger.info(f"Generated query: {query}")
 
+        # Format the message according to GROQ API requirements
         messages = [
             {
                 "role": "user",
-                "content": [
-                    {"type": "text", "text": query},
-                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{encoded_image}"}}
-                ]
+                "content": query
             }
         ]
 
@@ -119,8 +117,15 @@ def model_response(image_path: str, selected_language: str) -> dict:
         logger.info("Sending request to GROQ API")
         response = requests.post(
             GROQ_API_URL,
-            json={"model": "llama-3.2-90b-vision-preview", "messages": messages, "max_tokens": 4000},
-            headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
+            json={
+                "model": "llama-3.3-70b-versatile",
+                "messages": messages,
+                "max_tokens": 4000
+            },
+            headers={
+                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Content-Type": "application/json"
+            },
             timeout=30
         )
 

@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Display the response
-            responseContainer.innerHTML = marked.parse(result.choices[0].message.content);
+            responseContainer.innerHTML = marked.parse(result["choices"][0]["message"]["content"]);
             responseContainer.classList.remove('hidden');
             errorContainer.classList.add('hidden');
 
