@@ -83,9 +83,9 @@ async def equipment_rental_page(request: Request):
 async def farmer_assistant_page(request: Request):
     return templates.TemplateResponse("farmer-assistant.html",{"request":request})
 
-@app.get("/soil-health.html", response_class = HTMLResponse)
-async def soil_health_page(request: Request):
-    return templates.TemplateResponse("soil-health.html",{"request":request})
+@app.get("/water-footprint.html", response_class = HTMLResponse)
+async def water_footprint_page(request: Request):
+    return templates.TemplateResponse("water-footprint.html",{"request":request})
 
 @app.get("/weather-advisory.html", response_class = HTMLResponse)
 async def weather_advisory_page(request: Request):
@@ -95,9 +95,9 @@ async def weather_advisory_page(request: Request):
 async def schemes_page(request: Request):
     return templates.TemplateResponse("schemes.html",{"request":request})
 
-# @app.get("/waste-exchange.html", response_class = HTMLResponse)
-# async def waste_exchange_page(request: Request):
-#     return templates.TemplateResponse("waste-exchange.html",{"request":request})
+@app.get("/waste-exchange.html", response_class = HTMLResponse)
+async def waste_exchange_page(request: Request):
+    return templates.TemplateResponse("waste-exchange.html",{"request":request})
 
 @app.post("/disease_prediction")
 async def disease_prediction(file: UploadFile = File(...), selected_language: str = Form(...)):
