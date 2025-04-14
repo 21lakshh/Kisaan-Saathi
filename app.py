@@ -15,6 +15,8 @@ import google.generativeai as genai
 from pydantic import BaseModel
 from FarmerAssistant import app as farmer_assistant_app, main as init_farmer_assistant
 from langchain_core.messages import HumanMessage, AIMessage
+import joblib
+import numpy as np
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -27,8 +29,15 @@ app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-
 templates = Jinja2Templates(directory="templates")   
+
+# Load the water footprint model
+try:
+    water_footprint_model = joblib.load('Water Footprint Model/Model/water_footprint_model.pkl')
+    logger.info("Water footprint model loaded successfully")
+except Exception as e:
+    logger.error(f"Error loading water footprint model: {str(e)}")
+    water_footprint_model = None
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -254,6 +263,44 @@ async def farmer_chat(request: Request):
             status_code=500,
             content={"error": f"Chat processing error: {str(e)}"}
         )
+
+@app.post("/api/calculate-water-footprint")
+async def calculate_water_footprint(request: Request):
+    try:
+        if water_footprint_model is None:
+            raise HTTPException(status_code=500, detail="Water footprint model not available")
+            
+        data = await request.json()
+        
+        # Create input DataFrame
+        input_data = pd.DataFrame([{
+            'CropType': data['cropType'],
+            'Region': data['region'],
+            'SoilType': data['soilType'],
+            'IrrigationMethod': data['irrigationMethod'],
+            'Rainfall': float(data['rainfall']),
+            'Temperature': float(data['temperature']),
+            'Humidity': float(data['humidity'])
+        }])
+        
+        # Make prediction
+        prediction = water_footprint_model.predict(input_data)[0]
+        
+        # Calculate daily and weekly requirements
+        area = float(data['area'])
+        total_water = prediction * area / 1000  # Convert to cubic meters per hectare
+        water_per_day = total_water / 90  # Assuming 90 days growing period
+        water_per_week = water_per_day * 7
+        
+        return JSONResponse(content={
+            'totalWater': total_water,
+            'dailyWater': water_per_day,
+            'weeklyWater': water_per_week
+        })
+        
+    except Exception as e:
+        logger.error(f"Error calculating water footprint: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Remove or comment out the direct uvicorn run
 # import uvicorn

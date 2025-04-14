@@ -571,3 +571,7 @@ body {
     display: inline-block;
     color: #4CAF50;
 }
+
+.bg-dark-green {
+    background-color: #162619;
+}
