@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Exchange - Kisaan Saathi 🌾</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23395a7f'/%3E%3Cpath d='M30 40c0 0 5-10 20-10s20 10 20 10M30 60c0 0 5 10 20 10s20-10 20-10M50 40v20' stroke='white' stroke-width='8' fill='none'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#1e3a23]">
+    <div class="container mx-auto py-8 px-4">
+        <!-- Page Title -->
+        <div class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Crop Waste Exchange</h1>
+            <p class="text-gray-300 text-lg">Sell your crop waste for biofuel production and earn additional income</p>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Waste Listing Form -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-2xl font-bold text-white mb-6">List Your Waste</h2>
+                <form id="waste-form" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-300 mb-2">Waste Type</label>
+                        <select class="w-full bg-[#1a2e1d] text-white px-4 py-2 rounded-lg border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                            <option value="">Select waste type</option>
+                            <option value="rice-straw">Rice Straw</option>
+                            <option value="wheat-straw">Wheat Straw</option>
+                            <option value="sugarcane-bagasse">Sugarcane Bagasse</option>
+                            <option value="corn-stalks">Corn Stalks</option>
+                            <option value="cotton-stalks">Cotton Stalks</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2">Quantity (in kg)</label>
+                        <input type="number" class="w-full bg-[#1a2e1d] text-white px-4 py-2 rounded-lg border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2">Location</label>
+                        <input type="text" class="w-full bg-[#1a2e1d] text-white px-4 py-2 rounded-lg border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2">Preferred Pickup Date</label>
+                        <input type="date" class="w-full bg-[#1a2e1d] text-white px-4 py-2 rounded-lg border border-[#4caf50]/30 focus:outline-none focus:ring-2 focus:ring-[#4caf50]">
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#4caf50] hover:bg-[#3d8b40] text-white py-3 px-4 rounded-lg transition-all">
+                        List Waste for Sale
+                    </button>
+                </form>
+            </div>
+
+            <!-- Current Listings -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-2xl font-bold text-white mb-6">Your Listings</h2>
+                <div class="space-y-4">
+                    <!-- Sample Listing -->
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="text-white font-semibold">Rice Straw</h3>
+                                <p class="text-gray-400 text-sm">500 kg</p>
+                            </div>
+                            <span class="bg-[#4caf50]/20 text-[#4caf50] px-3 py-1 rounded-full text-sm">Pending</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <div class="text-gray-300">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                Village X, District Y
+                            </div>
+                            <div class="text-[#4caf50] font-semibold">
+                                ₹500
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Sample Listing -->
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 class="text-white font-semibold">Sugarcane Bagasse</h3>
+                                <p class="text-gray-400 text-sm">1000 kg</p>
+                            </div>
+                            <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">Scheduled</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <div class="text-gray-300">
+                                <i class="fas fa-map-marker-alt mr-2"></i>
+                                Village A, District B
+                            </div>
+                            <div class="text-[#4caf50] font-semibold">
+                                ₹1200
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits and Information -->
+            <div class="bg-[#162619] rounded-xl p-6 border border-[#2d3d2f]/40">
+                <h2 class="text-2xl font-bold text-white mb-6">Benefits</h2>
+                <div class="space-y-4">
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-rupee-sign text-[#4caf50] text-2xl mt-1"></i>
+                            <div>
+                                <h3 class="text-white font-semibold">Additional Income</h3>
+                                <p class="text-gray-300 text-sm">Earn money from your crop waste that would otherwise be burned or discarded</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-leaf text-[#4caf50] text-2xl mt-1"></i>
+                            <div>
+                                <h3 class="text-white font-semibold">Environmental Impact</h3>
+                                <p class="text-gray-300 text-sm">Contribute to reducing air pollution and support sustainable biofuel production</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-truck text-[#4caf50] text-2xl mt-1"></i>
+                            <div>
+                                <h3 class="text-white font-semibold">Free Pickup</h3>
+                                <p class="text-gray-300 text-sm">Government vehicles will collect the waste from your location at scheduled times</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Rates -->
+                <div class="mt-6">
+                    <h3 class="text-xl font-bold text-white mb-4">Current Rates</h3>
+                    <div class="bg-[#1a2e1d] rounded-lg p-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-gray-300">
+                                <span>Rice Straw</span>
+                                <span>₹1.00/kg</span>
+                            </div>
+                            <div class="flex justify-between text-gray-300">
+                                <span>Wheat Straw</span>
+                                <span>₹0.90/kg</span>
+                            </div>
+                            <div class="flex justify-between text-gray-300">
+                                <span>Sugarcane Bagasse</span>
+                                <span>₹1.20/kg</span>
+                            </div>
+                            <div class="flex justify-between text-gray-300">
+                                <span>Corn Stalks</span>
+                                <span>₹0.80/kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-[#162619] text-gray-300 py-6 border-t border-[#2d3d2f]/40 mt-8">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <p>© 2025 Kisaan Saathi. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Form submission handling
+        document.getElementById('waste-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Your waste listing has been submitted successfully!');
+        });
+    </script>
+</body>
+
+</html> 
