@@ -158,7 +158,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 ### Step 3: Install Dependencies
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt ##THESE ARE NOT YET ADDED
 ```
 
 ### Step 4: Environment Configuration
