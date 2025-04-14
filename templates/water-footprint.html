@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Footprint Calculator - Kisaan Saathi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .bg-primary {
+            background-color: #162619;
+        }
+        .text-primary {
+            color: #4caf50;
+        }
+        .border-primary {
+            border-color: #2d3d2f;
+        }
+        .hover\:bg-primary:hover {
+            background-color: #2d3d2f;
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4caf50;
+        }
+        .input-with-icon {
+            padding-left: 40px;
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.1);
+        }
+        /* Updated select styles */
+        select {
+            color: white !important;
+            background-color: #162619 !important;
+            border: 1px solid #2d3d2f !important;
+            border-radius: 0.5rem !important;
+            padding: 0.5rem 1rem !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234caf50'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 0.5rem center !important;
+            background-size: 1.5em 1.5em !important;
+            padding-right: 2.5rem !important;
+        }
+        select:focus {
+            outline: none !important;
+            border-color: #4caf50 !important;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2) !important;
+        }
+        select option {
+            background-color: #162619 !important;
+            color: white !important;
+            padding: 0.5rem !important;
+        }
+        /* Updated input styles */
+        input[type="number"] {
+            color: white !important;
+            background-color: #162619 !important;
+            border: 1px solid #2d3d2f !important;
+            border-radius: 0.5rem !important;
+            padding: 0.5rem 1rem !important;
+        }
+        input[type="number"]:focus {
+            outline: none !important;
+            border-color: #4caf50 !important;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2) !important;
+        }
+        input[type="number"]::placeholder {
+            color: #6b7280 !important;
+        }
+    </style>
+</head>
+<body class="bg-primary min-h-screen text-white">
+    <!-- Header -->
+    <header class="bg-[#1e3a23] p-4 flex justify-between items-center">
+        <div class="text-[#4caf50] text-3xl font-bold">Kisaan Saathi 🌾</div>
+        <a href="/dashboard.html" class="text-white hover:text-[#4caf50] text-lg flex items-center">
+            <i class="fas fa-chart-line mr-2"></i>
+            Go to Dashboard
+        </a>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Page Title -->
+        <div class="text-center mb-8">
+            <div class="bg-[#1e2b20] rounded-xl p-6 border border-[#2d3d2f]/40 inline-block">
+                <h1 class="text-3xl font-bold mb-2 text-primary">Water Footprint Calculator</h1>
+                <p class="text-gray-400">Calculate water requirements for your crops</p>
+            </div>
+        </div>
+
+        <!-- Calculator Form -->
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Left Column -->
+            <div class="bg-[#1e2b20] rounded-xl p-6 border border-[#2d3d2f]/40 card">
+                <h2 class="text-xl font-semibold mb-4 text-primary">Basic Information</h2>
+                
+                <div class="space-y-4">
+                    <div class="input-group">
+                        <select id="cropType" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary input-with-icon">
+                            <option value="">Select Crop Type</option>
+                            <option value="Wheat">Wheat</option>
+                            <option value="Rice">Rice</option>
+                            <option value="Maize">Maize</option>
+                            <option value="Sugarcane">Sugarcane</option>
+                            <option value="Cotton">Cotton</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="region" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary input-with-icon">
+                            <option value="">Select Region</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="UP">Uttar Pradesh</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Bihar">Bihar</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="soilType" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary input-with-icon">
+                            <option value="">Select Soil Type</option>
+                            <option value="Loamy">Loamy Soil</option>
+                            <option value="Sandy">Sandy Soil</option>
+                            <option value="Clayey">Clayey Soil</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <select id="irrigationMethod" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary input-with-icon">
+                            <option value="">Select Irrigation Method</option>
+                            <option value="Drip">Drip Irrigation</option>
+                            <option value="Sprinkler">Sprinkler Irrigation</option>
+                            <option value="Flood">Flood Irrigation</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="bg-[#1e2b20] rounded-xl p-6 border border-[#2d3d2f]/40 card">
+                <h2 class="text-xl font-semibold mb-4 text-primary">Environmental Factors</h2>
+                
+                <div class="space-y-4">
+                    <div class="input-group">
+                        <input type="number" id="rainfall" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" placeholder="Annual Rainfall (mm)">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="temperature" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" placeholder="Average Temperature (°C)">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="humidity" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" placeholder="Average Humidity (%)">
+                    </div>
+
+                    <div class="input-group">
+                        <input type="number" id="area" class="w-full bg-[#162619] border border-[#2d3d2f] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" placeholder="Area (square meters)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculate Button -->
+        <div class="max-w-4xl mx-auto mt-6">
+            <button onclick="calculateWaterFootprint()" class="w-full bg-primary text-white py-4 rounded-lg hover:bg-[#4caf50] transition duration-300 text-lg font-semibold">
+                <i class="fas fa-calculator mr-2"></i> Calculate Water Footprint
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="max-w-4xl mx-auto mt-8 hidden">
+            <div class="bg-[#1e2b20] rounded-xl p-6 border border-primary card">
+                <h2 class="text-2xl font-semibold mb-6 text-primary">Water Requirements Analysis</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-[#162619] rounded-lg p-4 text-center">
+                        <p class="text-gray-400 mb-2">Total Water Required</p>
+                        <p id="totalWater" class="text-2xl font-bold text-primary"></p>
+                    </div>
+                    <div class="bg-[#162619] rounded-lg p-4 text-center">
+                        <p class="text-gray-400 mb-2">Daily Requirement</p>
+                        <p id="dailyWater" class="text-2xl font-bold text-primary"></p>
+                    </div>
+                    <div class="bg-[#162619] rounded-lg p-4 text-center">
+                        <p class="text-gray-400 mb-2">Weekly Requirement</p>
+                        <p id="weeklyWater" class="text-2xl font-bold text-primary"></p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Optimization Recommendations</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-[#162619] rounded-lg p-4">
+                            <h4 class="text-lg font-semibold mb-2 text-primary">Irrigation Tips</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                    <span>Use drip irrigation to minimize water wastage</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                    <span>Implement rainwater harvesting systems</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                    <span>Schedule irrigation during cooler parts of the day</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-[#162619] rounded-lg p-4">
+                            <h4 class="text-lg font-semibold mb-2 text-primary">Soil Management</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                    <span>Use mulch to reduce evaporation</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                    <span>Monitor soil moisture regularly</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                                    <span>Implement crop rotation practices</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CROP_WATER_REQUIREMENTS = {
+            'Wheat': 1300,
+            'Rice': 2500,
+            'Maize': 1200,
+            'Sugarcane': 3500,
+            'Cotton': 2200
+        };
+
+        const REGION_FACTORS = {
+            'Punjab': 1.05,
+            'Maharashtra': 0.95,
+            'UP': 1.0,
+            'Karnataka': 0.9,
+            'Bihar': 1.1
+        };
+
+        const SOIL_FACTORS = {
+            'Loamy': 1.0,
+            'Sandy': 1.1,
+            'Clayey': 0.9
+        };
+
+        const IRRIGATION_FACTORS = {
+            'Drip': 0.85,
+            'Sprinkler': 0.9,
+            'Flood': 1.2
+        };
+
+        function formatWaterAmount(liters) {
+            if (liters >= 1000) {
+                return `${(liters / 1000).toFixed(2)} cubic meters`;
+            }
+            return `${liters.toFixed(2)} liters`;
+        }
+
+        function calculateWaterFootprint() {
+            const cropType = document.getElementById('cropType').value;
+            const area = parseFloat(document.getElementById('area').value);
+            const region = document.getElementById('region').value;
+            const soilType = document.getElementById('soilType').value;
+            const irrigationMethod = document.getElementById('irrigationMethod').value;
+            const rainfall = parseFloat(document.getElementById('rainfall').value) || 0;
+            const temperature = parseFloat(document.getElementById('temperature').value) || 25;
+            const humidity = parseFloat(document.getElementById('humidity').value) || 50;
+
+            const resultsDiv = document.getElementById('results');
+
+            if (!cropType || !area) {
+                alert('Please select a crop and enter the area');
+                return;
+            }
+
+            // Base water requirement from our model
+            let waterRequirement = CROP_WATER_REQUIREMENTS[cropType];
+
+            // Apply model factors
+            let modifier = 1.0;
+            if (region) modifier *= REGION_FACTORS[region];
+            if (soilType) modifier *= SOIL_FACTORS[soilType];
+            if (irrigationMethod) modifier *= IRRIGATION_FACTORS[irrigationMethod];
+            
+            // Rainfall adjustments
+            if (rainfall > 900) {
+                modifier -= 0.1;
+            } else if (rainfall < 400) {
+                modifier += 0.1;
+            } else {
+                modifier -= (rainfall - 400) * 0.0002; // Linear scale between 400-900mm
+            }
+            
+            // Temperature and humidity adjustments
+            const tempFactor = 1 + ((temperature - 25) * 0.02);
+            const humidityFactor = 1 - ((humidity - 50) * 0.005);
+            modifier *= tempFactor * humidityFactor;
+
+            // Apply the modifier
+            waterRequirement *= modifier;
+
+            const totalWater = waterRequirement * area / 1000; // Convert to cubic meters per hectare
+            const waterPerDay = totalWater / 90; // Assuming 90 days growing period
+            const waterPerWeek = waterPerDay * 7;
+
+            document.getElementById('totalWater').textContent = formatWaterAmount(totalWater * 1000);
+            document.getElementById('dailyWater').textContent = formatWaterAmount(waterPerDay * 1000);
+            document.getElementById('weeklyWater').textContent = formatWaterAmount(waterPerWeek * 1000);
+
+            // Add recommended water saving tips based on selections
+            let irrigationTips = document.createElement('ul');
+            irrigationTips.className = 'space-y-2';
+            
+            if (irrigationMethod === 'Flood') {
+                irrigationTips.innerHTML += `
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                    <span>Consider switching to drip irrigation to save up to 35% water</span>
+                </li>`;
+            }
+            
+            if (rainfall < 600) {
+                irrigationTips.innerHTML += `
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                    <span>Install rainwater harvesting systems to supplement irrigation</span>
+                </li>`;
+            }
+            
+            irrigationTips.innerHTML += `
+            <li class="flex items-start">
+                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                <span>Schedule irrigation during early morning or evening to reduce evaporation</span>
+            </li>`;
+            
+            document.querySelector('.bg-[#162619] h4:first-of-type + ul').replaceWith(irrigationTips);
+            
+            let soilTips = document.createElement('ul');
+            soilTips.className = 'space-y-2';
+            
+            if (soilType === 'Sandy') {
+                soilTips.innerHTML += `
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                    <span>Add organic matter to improve water retention in sandy soil</span>
+                </li>`;
+            } else if (soilType === 'Clayey') {
+                soilTips.innerHTML += `
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                    <span>Improve drainage to prevent waterlogging in clayey soil</span>
+                </li>`;
+            }
+            
+            soilTips.innerHTML += `
+            <li class="flex items-start">
+                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                <span>Use mulch to reduce soil water evaporation</span>
+            </li>
+            <li class="flex items-start">
+                <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                <span>Monitor soil moisture regularly with sensors</span>
+            </li>`;
+            
+            document.querySelector('.bg-[#162619] h4:nth-of-type(2) + ul').replaceWith(soilTips);
+
+            resultsDiv.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
