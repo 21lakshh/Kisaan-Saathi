@@ -175,30 +175,6 @@ OPEN_WEATHER_API_KEY=your_weather_api_key_here
 python app.py
 ```
 
-The application will be available at `http://localhost:8000`
+The application will be available at `http://127.0.0.1:8000`
 
 ---
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Farmers and agricultural experts for their valuable insights
-- Open-source community for their contributions
-- Government agencies for providing agricultural data
-- Research institutions for their work in agricultural technology
