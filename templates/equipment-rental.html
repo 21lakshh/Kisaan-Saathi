@@ -20,12 +20,20 @@
     <!-- Header -->
     <header class="bg-[#1e3a23] p-4 flex justify-between items-center">
         <div class="text-[#4caf50] text-3xl font-bold">Kisaan Saathi 🌾</div>
-        <a href="/dashboard.html" class="text-white hover:text-[#4caf50] text-lg flex items-center">
-            <i class="fas fa-chart-line mr-2"></i>
-            Go to Dashboard
-        </a>
+        <div class="flex items-center space-x-4">
+            <a href="/dashboard.html" class="text-white hover:text-[#4caf50] text-lg flex items-center">
+                <i class="fas fa-chart-line mr-2"></i>
+                Go to Dashboard
+            </a>
+            <button id="listEquipmentBtn" class="bg-[#4caf50] hover:bg-[#3d9140] text-white px-4 py-2 rounded-lg flex items-center">
+                <i class="fas fa-plus-circle mr-2"></i>
+                List Your Equipment
+            </button>
+        </div>
     </header>
-        <!-- Main Content -->
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-6">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <!-- Filters Panel -->
             <div class="bg-[#162619] rounded-xl p-4 border border-[#2d3d2f]/40">
@@ -59,10 +67,6 @@
                     
                     <button class="w-full bg-[#4caf50] hover:bg-[#3d9140] text-white py-2 rounded-lg">
                         Search
-                    </button>
-
-                    <button class="w-full bg-[#1a2e1d] hover:bg-[#2a3e2d] border border-[#4caf50] text-[#4caf50] py-2 rounded-lg">
-                        List Your Equipment
                     </button>
                 </div>
             </div>
@@ -184,26 +188,101 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="w-full bg-[#1a211d] text-gray-300 pt-8 pb-6 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <div class="logo text-[#4caf50] text-2xl font-devanagari mb-2">Kisaan Saathi 🌾</div>
-            <p class="text-gray-400 text-sm mb-4">
-                Supporting farmers across India with sustainable solutions
-            </p>
-            <div class="flex justify-center space-x-4">
-                <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-gray-400 hover:text-[#4caf50]"><i class="fab fa-instagram"></i></a>
+    <!-- Equipment Listing Modal -->
+    <div id="listEquipmentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-[#162619] rounded-xl p-6 w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white">List Your Equipment</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div class="mt-4 text-sm">
-                © 2023 Kisaan Saathi. All rights reserved.
-            </div>
+            <form id="equipmentForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-1">Equipment Type</label>
+                        <select required class="w-full bg-[#1a2e1d] px-3 py-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] border border-[#4caf50]/30">
+                            <option value="">Select Type</option>
+                            <option value="tractor">Tractor</option>
+                            <option value="harvester">Harvester</option>
+                            <option value="drone">Drone</option>
+                            <option value="sprayer">Sprayer</option>
+                            <option value="rotavator">Rotavator</option>
+                            <option value="plough">Plough</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-1">Model Name</label>
+                        <input type="text" required class="w-full bg-[#1a2e1d] px-3 py-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] border border-[#4caf50]/30">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-1">Daily Rate (₹)</label>
+                        <input type="number" required class="w-full bg-[#1a2e1d] px-3 py-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] border border-[#4caf50]/30">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 text-sm mb-1">Location</label>
+                        <input type="text" required class="w-full bg-[#1a2e1d] px-3 py-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] border border-[#4caf50]/30">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-gray-300 text-sm mb-1">Description</label>
+                    <textarea rows="3" class="w-full bg-[#1a2e1d] px-3 py-2 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#4caf50] border border-[#4caf50]/30"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-300 text-sm mb-1">Upload Photos</label>
+                    <div class="border-2 border-dashed border-[#4caf50]/30 rounded-lg p-4 text-center">
+                        <i class="fas fa-cloud-upload-alt text-3xl text-[#4caf50] mb-2"></i>
+                        <p class="text-gray-400">Drag and drop photos here or click to browse</p>
+                        <input type="file" multiple accept="image/*" class="hidden">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancelBtn" class="bg-[#1a2e1d] hover:bg-[#2a3e2d] border border-[#4caf50] text-[#4caf50] py-2 px-6 rounded-lg">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-[#4caf50] hover:bg-[#3d9140] text-white py-2 px-6 rounded-lg">
+                        List Equipment
+                    </button>
+                </div>
+            </form>
         </div>
-    </footer>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Modal functionality
+            const modal = document.getElementById('listEquipmentModal');
+            const listBtn = document.getElementById('listEquipmentBtn');
+            const closeBtn = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            listBtn.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+
+            // Form submission
+            const equipmentForm = document.getElementById('equipmentForm');
+            equipmentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Here you would typically send the form data to your backend
+                alert('Equipment listed successfully!');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                equipmentForm.reset();
+            });
+
+            // Rent button functionality
             const rentButtons = document.querySelectorAll('button:contains("Rent")');
             rentButtons.forEach(button => {
                 button.addEventListener('click', function() {
