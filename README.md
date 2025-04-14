@@ -17,6 +17,7 @@
   - Help **government agencies** prioritize land inspections based on report density.
 - **Real-time Processing**: Get instant disease diagnosis with image upload
 - **Multi-language Support**: Available in multiple Indian languages
+- Check out the Plant Disease Prediction Model - [Plant Disease Prediciton](https://github.com/21lakshh/Plant-Disease-Prediction)
 
 ---
 
