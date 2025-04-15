@@ -53,12 +53,12 @@ grid_search = GridSearchCV(
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Perform Grid Search
-print("Starting Grid Search...")
+print("Starting Grid Search...\n")
 grid_search.fit(X_train, y_train)
 
 # Get the best parameters and best score
-print("\nBest Parameters:", grid_search.best_params_)
-print("Best Score (negative MSE):", grid_search.best_score_)
+print("Best Parameters:\n", grid_search.best_params_)
+print("Best Score (negative MSE):\n", grid_search.best_score_)
 
 # Get the best model
 best_model = grid_search.best_estimator_
@@ -68,12 +68,12 @@ y_pred = best_model.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
-print("\nTest Set Performance:")
-print("MSE:", mse)
-print("RMSE:", np.sqrt(mse))
-print("R² Score:", r2)
+print("Test Set Performance:\n")
+print("MSE:\n", mse)
+print("RMSE:\n", np.sqrt(mse))
+print("R² Score:\n", r2)
 
 # Save the best model
 import joblib
 joblib.dump(best_model, 'Water Footprint Model/Model/water_footprint_model.pkl')
-print("\nModel saved as 'water_footprint_model.pkl'")
+print("Model saved as 'water_footprint_model.pkl'")
