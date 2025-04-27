@@ -1,183 +1,108 @@
+![github-submission-banner](https://github.com/user-attachments/assets/a1493b84-e4e2-456e-a791-ce35ee2bcf2f)
+
 # 🌾 Kisaan Saathi – Empowering Farmers with AI
 
-**Kisaan Saathi** is a comprehensive **AI-powered Farmer Dashboard** designed to support Indian farmers through real-time data, smart decision-making tools, and access to vital resources. From intelligent crop disease diagnosis to market price analysis, equipment rental, and weather forecasting — Kisaan Saathi is your digital companion in the field.
-
-[Watch the Video Demo.](https://youtu.be/XoOM4berjAY)
+> A one-stop AI-powered dashboard revolutionizing farming decisions through disease diagnosis, water management, market analysis, and real-time assistance.
 
 ---
 
-## 🚀 Features
+## 📌 Problem Statement
 
-### 🧬 Crop Care & Disease Detection  
-- Powered by a **custom-trained Xception model** to detect crop diseases across **38 unique categories**.  
-- Detected disease details are passed to an **LLM** to generate:
-  - ✅ Cause  
-  - 🌱 Prevention  
-  - 💊 Treatment  
-- Equipped with an **AI-powered hotspot mapping system** using **DBSCAN** clustering to:
-  - Visualize disease-affected areas.
-  - Help **government agencies** prioritize land inspections based on report density.
-- **Real-time Processing**: Get instant disease diagnosis with image upload
-- **Multi-language Support**: Available in multiple Indian languages
-- Check out the Plant Disease Prediction Model - [Plant Disease Prediciton](https://github.com/21lakshh/Plant-Disease-Prediction)
+**Problem Statement 1 – Weave AI magic with Groq**
 
 ---
 
-### 💧 Water Footprint Calculator
-- **ML-Powered Water Requirement Prediction** using a **Random Forest Regressor** model
-- Considers multiple factors for accurate water requirement estimation:
-  - Crop type and area
-  - Regional climate conditions
-  - Soil characteristics
-  - Irrigation methods
-  - Environmental factors (rainfall, temperature, humidity)
-- Provides detailed insights:
-  - Total water requirement
-  - Daily and weekly water needs
-  - Customized irrigation recommendations
-  - Soil-specific water management tips
-- Model Features:
-  - Handles both categorical (crop type, soil type) and numerical features
-  - Provides real-time predictions through FastAPI backend
-  - Adapts recommendations based on local conditions
+## 🎯 Objective
+
+Kisaan Saathi is designed to empower Indian farmers by integrating AI into everyday agricultural practices.  
+It addresses key challenges like disease detection, market pricing, resource management, and access to government schemes, helping farmers make smarter, faster, and more profitable decisions.
 
 ---
 
-### 🤖 Farmer AI Assistant – Multi-Agent RAG System  
-- Built with a **multi-agent architecture** for specialized assistance
-- Uses **RAG (Retrieval-Augmented Generation)** with **ChromaDB vector storage** for Mental Health Support
-- Ask anything – from farming tips to market advice
+## 🧠 Team & Approach
 
----
+### Team Name:  
+`BLOOM`
 
-### 📊 Market Analysis  
-- Real-time crop pricing via external **agri-market APIs**
-- Features:
-  - Price trends visualization
-  - Historical data analysis
-  - Regional price comparisons
-- Helps farmers counter unfair middlemen pricing with live rate insights
-- Enables better selling decisions and pricing power
+### Team Members:  
+- Lakshay Sharma ([GitHub](https://github.com/21lakshh))
 
----
-
-### 🏛️ Government Schemes  
-- A centralized page for all **ongoing agricultural schemes**
-- View **eligibility**, **benefits**, and **application steps** in one place
-
----
-
-### 🌦️ Weather Advisory  
-- Fetches accurate weather updates via **Weather API**
-- Features:
-  - Weather Forecast
-  - Crop calendar and Advice
-  - Wind speed monitoring
-  - Humidity 
-  - Soil Temp
-
----
-
-### 🔁 Crop Waste Exchange  
-- Farmers can **sell/exchange crop waste** for monetary value
-- Supports government initiatives for **biogas and biofuel** production
-
----
-
-### 🚜 Equipment Rental  
-- Access to nearby **equipment rental options** at affordable rates
-- Makes farming resources more accessible to small and marginal farmers
+### Your Approach:  
+- Selected to solve real agricultural inefficiencies impacting millions of farmers.  
+- Focused on making AI accessible and usable at the grassroots level.  
+- Tackled challenges like multi-language support, real-time clustering, and integrating external APIs.  
+- Pivoted towards multi-agent systems to better personalize farmer assistance.
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **HTML5** - Semantic markup
-- **TailwindCSS** - Utility-first CSS framework
-- **JavaScript** - Interactive features
-- **Chart.js** - Data visualization
-- **Font Awesome** - Icons
+### Core Technologies Used:
+- **Frontend:** HTML5, TailwindCSS, JavaScript, Chart.js
+- **Backend:** FastAPI, Uvicorn
+- **Database:** ChromaDB (for vector storage)
+- **APIs:** Weather API, Market Price APIs, Gemini API
+- **Hosting:** Local Deployment / Cloud-ready
 
-### Backend
-- **FastAPI** - Modern, fast web framework
-- **Uvicorn** - ASGI server
-
-### Machine Learning & AI
-- **TensorFlow** - Deep learning framework
-- **Scikit-learn** - Machine learning algorithms
-- **Xception** - Image classification model
-- **Random Forest** - Water requirement prediction
-- **DBSCAN** - Clustering algorithm
-
-### AI/LLM Integration
-- **LangChain** - LLM application framework
-- **LangGraph** - Multi-agent coordination
-- **ChromaDB** - Vector storage
-- **Groq LLM** - Fast inference
-- **Gemini API** - Advanced language model
-
-### APIs & Services
-- **Weather API** - Real-time weather data
-- **Market Price APIs** - Agricultural commodity prices
-- **Gemini API** - Scheme information
-- **Groq LLM API** - Tweaked to create Multiple agents for Automation
+### Sponsor Technologies Used (if any):
+- ✅ **Groq:**
 
 ---
 
-## 📸 Screenshots  
-![Dashboard](Images/image1.png)
-*Interactive Dashboard with Real-time Updates*
+## ✨ Key Features
 
-![Disease Detection](Images/image2.png)
-*AI-Powered Crop Disease Detection Interface*
-
-![Market Analysis](Images/image3.png)
-*Comprehensive Market Analysis Dashboard*
-
-![Water Calculator](Images/image4.png)
-*Water Footprint Calculator with ML Predictions*
+- ✅ 🧬 Crop Care & Disease Detection (38-category Xception model + LLM for Cause/Prevention/Treatment)
+- ✅ 💧 Water Footprint Calculator (ML-driven irrigation needs estimation)
+- ✅ 🤖 Farmer AI Assistant (Multi-agent RAG for mental health, farming tips, market guidance)
+- ✅ 📊 Market Analysis Dashboard (Real-time crop prices, price trends)
+- ✅ 🏛️ Government Schemes Hub (Eligibility & Application guidance)
+- ✅ 🌦️ Weather Advisory (Forecasts + Crop Advice)
+- ✅ 🔁 Crop Waste Exchange Platform
+- ✅ 🚜 Equipment Rental Finder
 
 ---
 
-## 🚀 Installation & Setup
+## 📽️ Demo & Deliverables
 
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package manager)
+- **Demo Video Link:** [Watch Here](https://youtu.be/XoOM4berjAY)  
+
+---
+
+## ✅ Tasks & Bonus Checklist
+
+- [✅] **All members completed mandatory social media and form tasks**  
+- [✅] **Bonus Task 1 - Shared badges on social media**  
+- [✅] **Bonus Task 2 - Signed up for Sprint.dev and filled form**
+
+---
+
+## 🧪 How to Run the Project
+
+### Requirements:
+- Python 3.8+
 - Git
+- API Keys (Groq, Gemini, Weather API, Market Price API)
+- `.env` file setup
 
-### Step 1: Clone the Repository
+### Local Setup:
 ```bash
+# Clone the repo
 git clone https://github.com/21lakshh/Kisaan-Sathi.git   
 cd Kisaan-Sathi
-```
 
-### Step 2: Create Virtual Environment
-```bash
+# Create Virtual Environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
 
-### Step 3: Install Dependencies
-```bash
-pip install -r requirements.txt ##THESE ARE NOT YET ADDED
-```
+# Install dependencies
+pip install -r requirements.txt
 
-### Step 4: Environment Configuration
-Create a `.env` file in the root directory:
-```bash
+# Setup Environment Variables
+# Create a .env file and add the following:
 GROQ_API_KEY=your_groq_key_here
 DATA_GOV_API_KEY=your_data_gov_key_here
 GEMINI_API_KEY=your_gemini_key_here
 OPEN_WEATHER_API_KEY=your_weather_api_key_here
-```
 
-### Step 5: Run the Application
-```bash
+# Run the Application
 python app.py
-```
-
-The application will be available at `http://127.0.0.1:8000`
-
----
