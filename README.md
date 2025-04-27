@@ -25,7 +25,7 @@ It addresses key challenges like disease detection, market pricing, resource man
 `BLOOM`
 
 ### Team Members:  
-- Lakshay Sharma ([GitHub](https://github.com/21lakshh))
+- Lakshya Paliwal ([GitHub](https://github.com/21lakshh))
 
 ### Your Approach:  
 - Selected to solve real agricultural inefficiencies impacting millions of farmers.  
@@ -95,7 +95,7 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install -r requirements.txt
+pip install -r requirements.txt // Not added yet
 
 # Setup Environment Variables
 # Create a .env file and add the following:
